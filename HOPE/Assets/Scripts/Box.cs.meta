@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: cd953919461964b69a69fd2a0ddf5bea
+timeCreated: 1445001145
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - towerPrefab: {fileID: 109712, guid: 3eaffe67d94d04dcca6fbbfa394ca5bd, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
