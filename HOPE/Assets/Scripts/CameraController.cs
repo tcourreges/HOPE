@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour {
 
 	private Vector3 CurCamPos;
 	private Vector3 TarCamPos;
+
+	private Vector3 velocity=Vector3.zero;
 	
 	void Start() {
 		TarCamPos = transform.position;
@@ -35,19 +37,14 @@ public class CameraController : MonoBehaviour {
 		}
 
 		// ZOOM
+		float x = (transform.position.x - TarCamPos.x);
+		float y = (transform.position.y - TarCamPos.y);
+		float z = (transform.position.z - TarCamPos.z);
+		print (x + " " + y + " " + z);
 		TarCamPos = transform.position;
-		if (Input.GetAxis("Mouse ScrollWheel")!=0) {
-			StartTime = Time.time;
-			Zoom = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomSpeed;
-			Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
-			TarCamPos += ZoomVector;
-			journeyLength = Vector3.Distance (transform.position, TarCamPos);
-		}
-		float distCovered = (Time.time - StartTime) * 500;
-		float fracJourney = distCovered / journeyLength;
-		//print (transform.position);
-		//print (TarCamPos);
-		//print (fracJourney);
-		transform.position = Vector3.Lerp (transform.position, TarCamPos, fracJourney);
+		Zoom = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomSpeed;
+		Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
+		TarCamPos += ZoomVector;
+		transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
 	}
 }
