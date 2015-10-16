@@ -11,7 +11,7 @@ public class Box : MonoBehaviour {
 		if(currentTower == null) {
 			print("creating tower");
 			currentTower= (GameObject)Instantiate(towerPrefab);
-			currentTower.transform.position = transform.position + Vector3.up;
+			currentTower.transform.position = transform.position;
 		}
 		else {
 			print("already a tower");
