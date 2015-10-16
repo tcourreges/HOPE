@@ -5,22 +5,17 @@ public class CameraController : MonoBehaviour {
 
 	public float ScrollSpeed;
 	private float ScrollEdge = 0.01f;
-	
-	private int HorizontalScroll = 1;
-	private int VerticalScroll = 1;
-	private int DiagonalScroll = 1;
 
-	public Vector2 ZoomRange;
-	private float CurrentZoom = 0f;
+	private float Zoom = 0f;
 	public float ZoomSpeed;
-	private float ZoomRotation = 1f;
+	private float StartTime;
+	private float journeyLength = 1.0f;
 
-	private Vector3 InitPos;
-	private Vector3 InitRotation;
+	private Vector3 CurCamPos;
+	private Vector3 TarCamPos;
 	
 	void Start() {
-		InitPos = transform.position;
-		InitRotation = transform.eulerAngles;
+		TarCamPos = transform.position;
 	}
 	
 	void Update () {
@@ -40,9 +35,19 @@ public class CameraController : MonoBehaviour {
 		}
 
 		// ZOOM
-		CurrentZoom -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomSpeed;
-		CurrentZoom = Mathf.Clamp(CurrentZoom,ZoomRange.x,ZoomRange.y);
-		float ZoomZ = (float)(-(transform.position.y - (InitPos.y + CurrentZoom)) * 0.1);
-		transform.Translate (0f, 0f, ZoomZ, Space.Self);
+		TarCamPos = transform.position;
+		if (Input.GetAxis("Mouse ScrollWheel")!=0) {
+			StartTime = Time.time;
+			Zoom = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomSpeed;
+			Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
+			TarCamPos += ZoomVector;
+			journeyLength = Vector3.Distance (transform.position, TarCamPos);
+		}
+		float distCovered = (Time.time - StartTime) * 500;
+		float fracJourney = distCovered / journeyLength;
+		//print (transform.position);
+		//print (TarCamPos);
+		//print (fracJourney);
+		transform.position = Vector3.Lerp (transform.position, TarCamPos, fracJourney);
 	}
 }
