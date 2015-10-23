@@ -4,16 +4,14 @@ using System.Collections;
 public class TerrainGenerator : MonoBehaviour {
 
 	public int sizeOfMap;
-	public Transform prefab;
+	public GameObject prefab;
+	public GameObject wall;
 
 	// Use this for initialization
 	void Start () {
 		for (int i = 0 ; i < sizeOfMap ; i++) {
 			for (int j = 0 ; j < sizeOfMap ; j++) {
-				GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-				cube.transform.position = new Vector3(-sizeOfMap/2 + i, -1, -sizeOfMap/2 + j);
-				cube.transform.localScale = new Vector3(1,1,1);
-				cube.tag = "Floor";
+				Instantiate(prefab, new Vector3(-sizeOfMap/2 + i, -1, -sizeOfMap/2 + j), Quaternion.identity);
 			}
 		}
 	}
@@ -29,15 +27,17 @@ public class TerrainGenerator : MonoBehaviour {
 			RaycastHit hit = hits[i];
 
 			if (Input.GetMouseButton (0)) {
-				if (hit.transform.gameObject.tag == "Floor") {
-					GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-					cube.transform.position = new Vector3(hit.transform.position.x, 0, hit.transform.position.z);
-					cube.transform.localScale = new Vector3(1,3,1);
+				if (hit.transform.gameObject.tag == "Floor" && hit.transform.GetComponent<Floor>().isEmpty) {
+					GameObject wallObject;
+					wallObject = (GameObject)Instantiate(wall, new Vector3(hit.transform.position.x, 0, hit.transform.position.z), Quaternion.identity);
+					wallObject.transform.GetComponent<Wall>().floor = hit.collider.gameObject;
+					hit.transform.GetComponent<Floor>().isEmpty = false;
 				}
 			}
 
 			if (Input.GetMouseButton (1)) {
 				if (hit.transform.gameObject.tag != "Floor") {
+					hit.transform.GetComponent<Wall>().floor.transform.GetComponent<Floor>().isEmpty = true;
 					Destroy (hit.transform.gameObject);
 				}
 			}
