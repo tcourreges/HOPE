@@ -6,7 +6,7 @@ public class Laser : MonoBehaviour {
 	private LineRenderer line;
 	public GameObject origin, end;
 
-	private Vector3 x0, xi, xf;
+	private Vector3 x0, xf;
 	RaycastHit hit;
 
 	void setOrigin(GameObject o) {origin = o;}
@@ -21,19 +21,27 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		xi=xf;
 
-		if(Physics.Raycast(x0, xf-x0, out hit)) {
+		line.SetPosition(0, x0);
+		line.SetPosition(1, xf);
+		
+		RaycastHit[] hits = Physics.RaycastAll(x0, xf-x0);
+
+		for(int i=0; i<hits.Length; i++) {
+			RaycastHit hit=hits[i];
 			GameObject col=hit.collider.gameObject;
-			xi=col.transform.position;
-			if(col.tag == "Tower" ) {
-				//col = tour touchée par le laser
 
-				
+			if(col.tag == "Tower") {
+				col.GetComponent<Tower>().power();
+
+				if(col.GetComponent<Tower>().transparent==false) {
+					line.SetPosition(1, x0 + Vector3.Project( col.transform.position - x0, xf - x0));
+					break;
+				}
 			}
 		}
 
-		line.SetPosition(0, x0);	
-		line.SetPosition(1, xi);
+
+
 	}
 }
