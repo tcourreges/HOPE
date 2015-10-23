@@ -26,10 +26,9 @@ public class Laser : MonoBehaviour {
 		if(Physics.Raycast(x0, xf-x0, out hit)) {
 			GameObject col=hit.collider.gameObject;
 			xi=col.transform.position;
-			if(col.tag == "Tower" ) {
-				//col = tour touchée par le laser
 
-				
+			if(col.tag == "Tower" ) {
+				col.GetComponent<Tower>().powered=true;
 			}
 		}
 

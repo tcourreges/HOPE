@@ -4,7 +4,7 @@ using System.Collections;
 public class Tower : MonoBehaviour {
 
 	public bool emitsLaser = true;
-	public bool isPowered = false;
+	public bool powered = false;
 
 	public GameObject laser;
 
@@ -14,8 +14,8 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(powered==true) {
+			gameObject.GetComponent<Renderer>().material.color = Color.red;
+		}	
 	}
-
-	//void setLaser(GameObject target)
 }
