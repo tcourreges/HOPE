@@ -9,12 +9,11 @@ public class CameraController : MonoBehaviour {
 	private float Zoom = 0f;
 	public float ZoomSpeed;
 	private float StartTime;
-	private float journeyLength = 1.0f;
 
 	private Vector3 CurCamPos;
 	private Vector3 TarCamPos;
 
-	private Vector3 velocity=Vector3.zero;
+	private Vector3 velocity = Vector3.zero;
 	
 	void Start() {
 		TarCamPos = transform.position;
@@ -37,10 +36,6 @@ public class CameraController : MonoBehaviour {
 		}
 
 		// ZOOM
-		float x = (transform.position.x - TarCamPos.x);
-		float y = (transform.position.y - TarCamPos.y);
-		float z = (transform.position.z - TarCamPos.z);
-		print (x + " " + y + " " + z);
 		TarCamPos = transform.position;
 		Zoom = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 1000 * ZoomSpeed;
 		Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
