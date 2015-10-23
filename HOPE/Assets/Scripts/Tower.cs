@@ -3,19 +3,32 @@ using System.Collections;
 
 public class Tower : MonoBehaviour {
 
-	public bool emitsLaser = true;
-	public bool powered = false;
+	public bool transparent;
+	public bool powered;
+	private int updated;
 
 	public GameObject laser;
 
 	// Use this for initialization
 	void Start () {
+		transparent=true;
+		powered=false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(powered==true) {
-			gameObject.GetComponent<Renderer>().material.color = Color.red;
-		}	
+		if(updated>10) {
+			powered=false;
+			gameObject.GetComponent<Renderer>().material.color = Color.white;
+		}
+		updated++;
+	}
+
+	//Powers the tower during the next 10 frames
+	public void power() {
+		powered=true;
+		gameObject.GetComponent<Renderer>().material.color = Color.red;
+
+		updated=0;
 	}
 }
