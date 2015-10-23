@@ -26,7 +26,6 @@ public class Laser : MonoBehaviour {
 		line.SetPosition(1, xf);
 		
 		RaycastHit[] hits = Physics.RaycastAll(x0, xf-x0);
-
 		for(int i=0; i<hits.Length; i++) {
 			RaycastHit hit=hits[i];
 			GameObject col=hit.collider.gameObject;

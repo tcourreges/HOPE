@@ -7,7 +7,7 @@ public class Tower : MonoBehaviour {
 	public bool powered;
 	private int updated;
 
-	public GameObject laser;
+	//public GameObject laser;
 
 	// Use this for initialization
 	void Start () {
