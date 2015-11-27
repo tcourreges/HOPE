@@ -17,14 +17,20 @@ public class GameController : MonoBehaviour {
 	void Update () {	
 		Floor f=tg.getFloor();
 		if(f!=null) {
-			if(sm.getState() == controlState.wall) {
-				f.createWall();
-			}
-			else if(sm.getState() == controlState.tower1) {
-				f.createTower(towerType.tower1);
-			}
-			if(sm.getState() == controlState.deleteWall) {
-				f.deleteObject();
+
+			if(sm.getState() != controlState.idle)
+				f.highlight();
+
+			if(Input.GetMouseButton (0)) {
+				if(sm.getState() == controlState.wall) {
+					f.createWall();
+				}
+				else if(sm.getState() == controlState.tower1) {
+					f.createTower(towerType.tower1);
+				}
+				if(sm.getState() == controlState.deleteWall) {
+					f.deleteObject();
+				}
 			}	
 		}
 

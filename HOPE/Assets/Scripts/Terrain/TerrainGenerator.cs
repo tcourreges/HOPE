@@ -26,9 +26,6 @@ public class TerrainGenerator : MonoBehaviour {
 
 	//returns clicked Floor (iterates through raycast and returns first Floor element found)
 	public Floor getFloor() {
-		if(Input.GetMouseButton (0) == false)
-			return null;
-
 		RaycastHit[] hits;
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		hits = Physics.RaycastAll (ray);

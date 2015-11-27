@@ -12,6 +12,7 @@ public class Floor : MonoBehaviour {
 
 	public GameObject wallPrefab;
 	public GameObject towerPrefab;
+	public GameObject highlightPrefab;
 
 	public bool isEmpty() {return currentObject == null;}
 
@@ -25,7 +26,6 @@ public class Floor : MonoBehaviour {
 									Quaternion.identity
 								);
 		currentObject = wallObject;
-		print(currentObject);
 		wallObject.tag = "Wall";
 	}
 	
@@ -48,6 +48,11 @@ public class Floor : MonoBehaviour {
 	public void deleteObject() {
 		Destroy(currentObject);
 	}
-	
-	
+
+	public void highlight() {
+		GameObject hl = (GameObject)Instantiate(	highlightPrefab,
+								new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+								Quaternion.identity
+							);
+	}	
 }
