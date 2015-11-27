@@ -17,16 +17,23 @@ public class Floor : MonoBehaviour {
 
 	//Instantiate a Wall above the Floor
 	public void createWall() {
+		if(!isEmpty())
+			return;
+
 		GameObject wallObject = (GameObject)Instantiate(	wallPrefab,
 									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 									Quaternion.identity
 								);
 		currentObject = wallObject;
+		print(currentObject);
 		wallObject.tag = "Wall";
 	}
 	
 	//Instantiate a Tower above the Floor
 	public void createTower(towerType t) {
+		if(!isEmpty())
+			return;
+
 		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
 									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 									Quaternion.identity

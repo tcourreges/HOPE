@@ -36,7 +36,7 @@ public class TerrainGenerator : MonoBehaviour {
 		for (int i = 0; i < hits.Length; i++) {
 			RaycastHit hit = hits[i];
 
-			if (hit.transform.gameObject.tag == "Floor" && hit.transform.GetComponent<Floor>().isEmpty()) {
+			if (hit.transform.gameObject.tag == "Floor") {
 				Floor f = hit.transform.GetComponent<Floor>();
 				return f;
 			}
