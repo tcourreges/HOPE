@@ -1,6 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* Types of towers
+*/
+public enum towerType{
+	core,
+	generator,
+	tower1
+};
+
+
+/*
+Tower class : can be powered, attacks aliens
+*/
 public class Tower : MonoBehaviour {
 
 	public bool transparent;

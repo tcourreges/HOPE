@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 2e4929c24466c4245a5c2c21baf3d26f
-timeCreated: 1445613856
+timeCreated: 1448643655
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - wallPrefab: {fileID: 195998, guid: db8c005774f6c7d4dbfccd7e4b8ce3cb, type: 2}
+  - towerPrefab: {fileID: 109712, guid: 3eaffe67d94d04dcca6fbbfa394ca5bd, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
