@@ -15,9 +15,7 @@ public class Selection : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		countdown--;
-		if(countdown<0) {
-			print("salut gars");
+		if(countdown<0)
 			Destroy(transform.gameObject);
-		}
 	}
 }
