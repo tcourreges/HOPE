@@ -6,8 +6,8 @@ using System.Collections;
 public enum controlState{
 	idle, //default
 	tower1, //tower selected
-	wall, deleteWall
-
+	wall, deleteWall,
+	generator1, generator2, generator3
 };
 
 /*
@@ -31,6 +31,8 @@ public class ControlStateMachine : MonoBehaviour {
 			setState(controlState.wall);
 		else if (Input.GetKeyDown("x"))
 			setState(controlState.deleteWall);
+		else if (Input.GetKeyDown("g"))
+			setState(controlState.generator1);
 	}
 
 	public void setState(controlState s) {

@@ -1,12 +1,15 @@
 fileFormatVersion: 2
 guid: 2e4929c24466c4245a5c2c21baf3d26f
-timeCreated: 1448643655
+timeCreated: 1448729456
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - wallPrefab: {fileID: 195998, guid: db8c005774f6c7d4dbfccd7e4b8ce3cb, type: 2}
   - towerPrefab: {fileID: 109712, guid: 3eaffe67d94d04dcca6fbbfa394ca5bd, type: 2}
+  - highlightPrefab: {fileID: 195998, guid: 8524a33dd2a4e48ac9150c99beef2997, type: 2}
+  - generatorPrefab: {fileID: 175110, guid: 42f2daa4a9cc8444baa7bafeb127fa74, type: 2}
+  - laserPrefab: {fileID: 117296, guid: 0cf3d2f5b21f744cb8c8e31d1af7ce1b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
