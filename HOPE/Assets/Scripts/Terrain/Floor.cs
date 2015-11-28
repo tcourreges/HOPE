@@ -13,6 +13,8 @@ public class Floor : MonoBehaviour {
 	public GameObject wallPrefab;
 	public GameObject towerPrefab;
 	public GameObject highlightPrefab;
+	public GameObject generatorPrefab;
+	public GameObject laserPrefab;
 
 	public bool isEmpty() {return currentObject == null;}
 
@@ -54,5 +56,25 @@ public class Floor : MonoBehaviour {
 								new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 								Quaternion.identity
 							);
-	}	
+	}
+
+	public void createGenerator(Floor end) {
+		GameObject generatorObject = (GameObject)Instantiate(	generatorPrefab,
+									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									Quaternion.identity
+								);
+		
+		GameObject laserObject = (GameObject)Instantiate(	laserPrefab,
+									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									Quaternion.identity
+								);
+		
+		//GameObject e = end.GetComponent<GameObject>();
+
+		laserObject.GetComponent<Laser>().setOriginEnd(generatorObject, end.gameObject);
+
+	}
+
+
+
 }
