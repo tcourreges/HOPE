@@ -19,14 +19,14 @@ public class Generator : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		power();
-		/*
+	void Update () {		
+		//print(updated);
+
 		if(updated>10) {
 			powered=false;
 			gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
-		updated++;*/
+		updated++;
 	}
 
 	//Powers the tower during the next 10 frames
@@ -37,5 +37,5 @@ public class Generator : MonoBehaviour {
 		updated=0;
 	}
 
-	public bool isPowered() {return true;}//powered;}
+	public bool isPowered() {return powered;}
 }

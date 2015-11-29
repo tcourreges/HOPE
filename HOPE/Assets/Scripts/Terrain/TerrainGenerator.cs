@@ -15,7 +15,7 @@ public class TerrainGenerator : MonoBehaviour {
 	void Start () {
 		for (int i = 0 ; i < sizeOfMap ; i++) {
 			for (int j = 0 ; j < sizeOfMap ; j++) {
-				GameObject cube = (GameObject)Instantiate(floorPrefab, new Vector3(-sizeOfMap/2 + i + 0.5f, -1, -sizeOfMap/2 + j + 0.5f), Quaternion.identity);
+				GameObject cube = (GameObject)Instantiate(floorPrefab, new Vector3(-sizeOfMap/2 + i + 0.5f, 0, -sizeOfMap/2 + j + 0.5f), Quaternion.identity);
 				cube.GetComponent<MeshRenderer>().enabled = false;
 			}
 		}

@@ -41,8 +41,8 @@ public class CameraController : MonoBehaviour {
 		Zoom = Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed * distance;
 		Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
 		Vector3 TestZoomVector = TarCamPos + ZoomVector;
-		print (TestZoomVector);
-		print (transform.position);
+		//print (TestZoomVector);
+		//print (transform.position);
 		//if (TestZoomVector.y > 0.4) {
 			TarCamPos += ZoomVector;
 			transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);

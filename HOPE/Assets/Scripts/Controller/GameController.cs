@@ -19,7 +19,12 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if(lastFloor!=null)
 			lastFloor.highlight();
-	
+		
+		/*
+		foreach(GameObject toto in GameObject.FindGameObjectsWithTag("Laser")) {
+			toto.GetComponent<Laser>().updateLaser();
+		}*/
+
 		Floor f=tg.getFloor();
 		if(f!=null) {
 
