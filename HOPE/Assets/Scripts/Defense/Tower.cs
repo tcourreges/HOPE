@@ -29,11 +29,11 @@ public class Tower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*if(updated>10) {
+		if(updated>10) {
 			powered=false;
 			gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
-		updated++;*/
+		updated++;
 	}
 
 	//Powers the tower during the next 10 frames
