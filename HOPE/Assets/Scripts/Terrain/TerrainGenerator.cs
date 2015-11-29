@@ -21,7 +21,8 @@ public class TerrainGenerator : MonoBehaviour {
 		}
 	}
 
-	void Update() {		
+	void Update() {
+
 	}
 
 	//returns clicked Floor (iterates through raycast and returns first Floor element found)

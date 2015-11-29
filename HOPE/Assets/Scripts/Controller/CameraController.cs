@@ -12,11 +12,13 @@ public class CameraController : MonoBehaviour {
 
 	private Vector3 CurCamPos;
 	private Vector3 TarCamPos;
+	private float distance;
 
 	private Vector3 velocity = Vector3.zero;
 	
 	void Start() {
 		TarCamPos = transform.position;
+		distance = Mathf.Abs (transform.position.y);
 	}
 	
 	void Update () {
@@ -37,15 +39,19 @@ public class CameraController : MonoBehaviour {
 
 		// ZOOM
 		TarCamPos = transform.position;
-		float distance = Mathf.Abs (TarCamPos.y);
-		Zoom = Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed * distance;
+		Zoom = Input.GetAxis("Mouse ScrollWheel") * ZoomSpeed;
+		TarCamPos = transform.position + transform.forward * Time.deltaTime * Zoom * 1000;
+		float yMax = Mathf.Max (TarCamPos.y, 0.5f);
+		float zMax = (yMax / TarCamPos.y) * TarCamPos.z;
+		TarCamPos.y = yMax;
+		TarCamPos.z = zMax;
+		transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
+		/*
 		Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
-		Vector3 TestZoomVector = TarCamPos + ZoomVector;
-		print (TestZoomVector);
-		print (transform.position);
-		//if (TestZoomVector.y > 0.4) {
-			TarCamPos += ZoomVector;
-			transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
-		//}
+		TarCamPos += ZoomVector;
+		//TarCamPos.y = Mathf.Clamp (TarCamPos.y, 0.4f, Mathf.Infinity);
+		transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
+		distance = Mathf.Abs (TarCamPos.y);
+		*/
 	}
 }
