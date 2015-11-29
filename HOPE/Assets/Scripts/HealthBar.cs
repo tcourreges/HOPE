@@ -5,9 +5,9 @@ public class HealthBar : MonoBehaviour {
 
 	TextMesh tm;
 
-	public int currentHealth() {
-		return tm.text.Length;
-	}
+	private Alien alien;
+
+	public void setAlien(Alien a) {alien=a;}
 
 	// Use this for initialization
 	void Start () {
@@ -16,13 +16,16 @@ public class HealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.forward = Camera.main.transform.forward;
-	}
+		transform.position = alien.transform.position;
+		transform.Translate(new Vector3(0,1,0));
 
-	void inc() {
-		if(currentHealth() > 1)
-			tm.text = tm.text.Remove(tm.text.Length -1);
-		else
-			Destroy(transform.parent.gameObject);
+		transform.forward = Camera.main.transform.forward;
+
+
+		tm.text = "";
+		for(int i =0; i<alien.getHealth(); i++)
+			tm.text +="x";
+		for(int i=alien.getHealth(); i<alien.getHealthMax(); i++)
+			tm.text +="-";
 	}
 }
