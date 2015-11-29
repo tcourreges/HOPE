@@ -24,7 +24,7 @@ public class Floor : MonoBehaviour {
 			return;
 
 		GameObject wallObject = (GameObject)Instantiate(	wallPrefab,
-									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
 									Quaternion.identity
 								);
 		currentObject = wallObject;
@@ -37,13 +37,11 @@ public class Floor : MonoBehaviour {
 			return;
 
 		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
-									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
 									Quaternion.identity
 								);
 		currentObject = towerObject;
 		towerObject.tag = "Tower";
-
-		towerObject.GetComponent<Tower>().power();
 	}
 
 	//Destroy the currentObject
@@ -52,7 +50,7 @@ public class Floor : MonoBehaviour {
 	}
 
 	public void highlight() {
-		GameObject hl = (GameObject)Instantiate(	highlightPrefab,
+		/*GameObject hl = (GameObject)*/Instantiate(	highlightPrefab,
 								new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 								Quaternion.identity
 							);
@@ -69,8 +67,6 @@ public class Floor : MonoBehaviour {
 									Quaternion.identity
 								);
 		
-		//GameObject e = end.GetComponent<GameObject>();
-
 		laserObject.GetComponent<Laser>().setOriginEnd(generatorObject, end.gameObject);
 
 	}

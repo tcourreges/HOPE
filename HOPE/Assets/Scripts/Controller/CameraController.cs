@@ -46,12 +46,5 @@ public class CameraController : MonoBehaviour {
 		TarCamPos.y = yMax;
 		TarCamPos.z = zMax;
 		transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
-		/*
-		Vector3 ZoomVector = new Vector3(0.0f, -Mathf.Cos(transform.rotation.x)*Zoom, Mathf.Sin(transform.rotation.x)*Zoom);
-		TarCamPos += ZoomVector;
-		//TarCamPos.y = Mathf.Clamp (TarCamPos.y, 0.4f, Mathf.Infinity);
-		transform.position = Vector3.SmoothDamp (transform.position, TarCamPos, ref velocity, 0.2f);
-		distance = Mathf.Abs (TarCamPos.y);
-		*/
 	}
 }
