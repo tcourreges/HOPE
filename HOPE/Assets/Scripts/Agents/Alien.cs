@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Alien : MonoBehaviour {
 
-
 	private int healthMax=3;
 	private int health;
 
@@ -19,6 +18,10 @@ public class Alien : MonoBehaviour {
 						Quaternion.identity
 			  		);
 		healthBar.setAlien(this);
+
+		// NAVMESH MOVE
+		NavMeshAgent agent = GetComponent<NavMeshAgent>();
+		agent.destination = new Vector3 (-10.5f, 1.5f, -10.5f);
 	}
 	
 	// Update is called once per frame
