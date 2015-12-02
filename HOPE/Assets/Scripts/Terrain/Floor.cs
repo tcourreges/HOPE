@@ -57,7 +57,7 @@ public class Floor : MonoBehaviour {
 
 	public void highlight() {
 		/*GameObject hl = (GameObject)*/Instantiate(	highlightPrefab,
-								new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+								new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
 								Quaternion.identity
 							);
 	}
