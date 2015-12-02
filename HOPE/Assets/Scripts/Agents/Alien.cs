@@ -10,13 +10,15 @@ public class Alien : MonoBehaviour {
 	private HealthBar healthBar;
 	public HealthBar healthBarPrefab;
 
+	public GameObject explosionParticles;
+
 	// Use this for initialization
 	void Start () {
 		health=healthMax;
 
 		healthBar = (HealthBar)Instantiate(	healthBarPrefab,
-						new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
-						Quaternion.identity
+							new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
+							Quaternion.identity
 			  		);
 		healthBar.setAlien(this);
 	}
@@ -42,6 +44,11 @@ public class Alien : MonoBehaviour {
 	private void die() {
 		Destroy(transform.gameObject);
 		Destroy(healthBar.transform.gameObject);
+
+		Instantiate(	explosionParticles,
+				new Vector3(transform.position.x, transform.position.y, transform.position.z),
+				Quaternion.identity
+			  );
 	}
 
 	public int getHealth() {return health;}
