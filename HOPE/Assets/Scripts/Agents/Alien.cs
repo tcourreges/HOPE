@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Alien : MonoBehaviour {
 
-	private int healthMax=3;
+	private int healthMax=10;
 	private int health;
 
 	private HealthBar healthBar;

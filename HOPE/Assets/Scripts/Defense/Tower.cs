@@ -18,6 +18,8 @@ public class Tower : MonoBehaviour {
 	public bool transparent;
 	public bool powered;
 	private int updated;
+	public GameObject towerRangePrefab;
+	private GameObject towerRange;
 
 	private float range=4;
 	private int damage=2;
@@ -32,6 +34,7 @@ public class Tower : MonoBehaviour {
 		transparent=true;
 		powered=false;
 		currentReload = reload;
+		showRange ();
 	}
 	
 	// Update is called once per frame
@@ -66,20 +69,32 @@ public class Tower : MonoBehaviour {
 	}
 
 
-    	private GameObject findClosestEnemy() {
+    private GameObject findClosestEnemy() {
 		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
 		GameObject closest = null;
 
 		float minDist = Mathf.Infinity;
 		Vector3 position = transform.position;
-		foreach (GameObject alien in aliens) {
+		foreach (GameObject alien in aliens) { 
 		    Vector3 diff = alien.transform.position - position;
-		    float dist = diff.sqrMagnitude;
-		    if (dist < minDist && dist < range) {
+			float dist = diff.x * diff.x + diff.z * diff.z;
+		    if (dist < minDist && dist < range * range) {
 		        closest = alien;
 		        minDist = dist;
 		    }
 		}
 		return closest;
+	}
+
+	private void showRange() {
+		towerRange = (GameObject)Instantiate(		towerRangePrefab,
+		            								new Vector3(transform.position.x, transform.position.y-1.49f, transform.position.z),
+		            								Quaternion.identity
+		            						);
+		towerRange.GetComponent<TowerRange> ().initialize (range, gameObject);
+	}
+
+	public void deleteRange() {
+		Destroy (towerRange);
 	}
 }
