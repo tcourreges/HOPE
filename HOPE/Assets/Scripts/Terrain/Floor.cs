@@ -16,6 +16,8 @@ public class Floor : MonoBehaviour {
 	public GameObject generatorPrefab;
 	public GameObject laserPrefab;
 
+	public GameObject particlePrefab;
+
 	public bool isEmpty() {return currentObject == null;}
 
 	//Instantiate a Wall above the Floor
@@ -29,6 +31,8 @@ public class Floor : MonoBehaviour {
 								);
 		currentObject = wallObject;
 		wallObject.tag = "Wall";
+
+		emitParticles();
 	}
 	
 	//Instantiate a Tower above the Floor
@@ -42,6 +46,8 @@ public class Floor : MonoBehaviour {
 								);
 		currentObject = towerObject;
 		towerObject.tag = "Tower";
+
+		emitParticles();
 	}
 
 	//Destroy the currentObject
@@ -69,8 +75,14 @@ public class Floor : MonoBehaviour {
 		
 		laserObject.GetComponent<Laser>().setOriginEnd(generatorObject, end.gameObject);
 
+		emitParticles();
 	}
 
-
+	private void emitParticles() {
+		Instantiate(	particlePrefab,
+				new Vector3(transform.position.x, transform.position.y, transform.position.z),
+				Quaternion.identity
+			);
+	}
 
 }
