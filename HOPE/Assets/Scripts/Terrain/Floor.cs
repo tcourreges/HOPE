@@ -63,6 +63,9 @@ public class Floor : MonoBehaviour {
 	}
 
 	public void createGenerator(Floor end) {
+		if(!isEmpty())
+			return;
+
 		GameObject generatorObject = (GameObject)Instantiate(	generatorPrefab,
 									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 									Quaternion.identity
@@ -71,9 +74,11 @@ public class Floor : MonoBehaviour {
 		GameObject laserObject = (GameObject)Instantiate(	laserPrefab,
 									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
 									Quaternion.identity
-								);
-		
+								);		
 		laserObject.GetComponent<Laser>().setOriginEnd(generatorObject, end.gameObject);
+
+		currentObject = generatorObject;
+		generatorObject.tag = "Generator";
 
 		emitParticles();
 	}
