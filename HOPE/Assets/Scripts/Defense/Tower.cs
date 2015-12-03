@@ -27,7 +27,7 @@ public class Tower : MonoBehaviour {
 
 	private int currentReload;
 
-	//public GameObject laser;
+	public GameObject projectilePrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +50,7 @@ public class Tower : MonoBehaviour {
 		if(powered && currentReload > reload) {
 			GameObject alien = findClosestEnemy();
 			if(alien != null)
-				attack(alien.GetComponent<Alien>());
+				attack(alien);
 		}
 	}
 
@@ -62,10 +62,15 @@ public class Tower : MonoBehaviour {
 		updated=0;
 	}
 
-	public void attack(Alien a) {
-		print("attack");
-		a.healthDown(damage);
+	public void attack(GameObject a) {
+		a.GetComponent<Alien>().healthDown(damage);
 		currentReload = 0;
+
+		GameObject projectile = (GameObject) Instantiate(	projectilePrefab,
+		            						new Vector3(a.transform.position.x, a.transform.position.y, a.transform.position.z),
+		            						Quaternion.identity
+		            				);
+		projectile.GetComponent<LaserProjectile> ().setOriginEnd (transform.position, a.transform.position);		
 	}
 
 
@@ -87,10 +92,10 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void showRange() {
-		towerRange = (GameObject)Instantiate(		towerRangePrefab,
-		            								new Vector3(transform.position.x, transform.position.y-1.49f, transform.position.z),
-		            								Quaternion.identity
-		            						);
+		towerRange = (GameObject)Instantiate(	towerRangePrefab,
+		            				new Vector3(transform.position.x, transform.position.y-1.49f, transform.position.z),
+		            				Quaternion.identity
+		            				);
 		towerRange.GetComponent<TowerRange> ().initialize (range, gameObject);
 	}
 
