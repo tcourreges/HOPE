@@ -12,6 +12,7 @@ public class LaserProjectile : MonoBehaviour {
 
 	public void setOriginEnd(Vector3 origin, Vector3 end) {
 		x0 = origin; xf = end;
+		x0.y += 1;
 
 		LineRenderer line=GetComponent<LineRenderer>();
 		line.SetPosition(0, x0);

@@ -93,7 +93,7 @@ public class Tower : MonoBehaviour {
 
 	private void showRange() {
 		towerRange = (GameObject)Instantiate(	towerRangePrefab,
-		            				new Vector3(transform.position.x, transform.position.y-1.49f, transform.position.z),
+		            				new Vector3(transform.position.x, transform.position.y+0.01f, transform.position.z),
 		            				Quaternion.identity
 		            				);
 		towerRange.GetComponent<TowerRange> ().initialize (range, gameObject);

@@ -41,7 +41,7 @@ public class Floor : MonoBehaviour {
 			return;
 
 		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
-									new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
+									new Vector3(transform.position.x, transform.position.y, transform.position.z),
 									Quaternion.identity
 								);
 		currentObject = towerObject;
@@ -67,15 +67,19 @@ public class Floor : MonoBehaviour {
 			return;
 
 		GameObject generatorObject = (GameObject)Instantiate(	generatorPrefab,
-									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									new Vector3(transform.position.x, transform.position.y, transform.position.z),
 									Quaternion.identity
 								);
 		
 		GameObject laserObject = (GameObject)Instantiate(	laserPrefab,
-									new Vector3(transform.position.x, transform.position.y+1, transform.position.z),
+									new Vector3(transform.position.x, transform.position.y, transform.position.z),
 									Quaternion.identity
 								);		
 		laserObject.GetComponent<Laser>().setOriginEnd(generatorObject, end.gameObject);
+
+		Vector3 vect = end.gameObject.transform.position - generatorObject.transform.position;
+
+		generatorObject.transform.Rotate(new Vector3(0, Vector3.Angle(new Vector3(0,0,1), vect), 0 ));
 
 		currentObject = generatorObject;
 		generatorObject.tag = "Generator";
