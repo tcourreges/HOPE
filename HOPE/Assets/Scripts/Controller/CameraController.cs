@@ -24,17 +24,23 @@ public class CameraController : MonoBehaviour {
 	void Update () {
 		// SCROLL
 		if (Input.mousePosition.x >= Screen.width * (1 - ScrollEdge) || Input.GetKey(KeyCode.RightArrow)) {
-			transform.Translate(Vector3.right * Time.deltaTime * ScrollSpeed, Space.World);
+			transform.Translate(Vector3.right * Time.deltaTime * ScrollSpeed, Space.Self);
 		}
 		else if (Input.mousePosition.x <= Screen.width * ScrollEdge || Input.GetKey(KeyCode.LeftArrow)) {
-			transform.Translate(Vector3.right * Time.deltaTime * -ScrollSpeed, Space.World);
+			transform.Translate(Vector3.right * Time.deltaTime * -ScrollSpeed, Space.Self);
 		}
-		
+
 		if (Input.mousePosition.y >= Screen.height * (1 - ScrollEdge) || Input.GetKey(KeyCode.UpArrow)) {
-			transform.Translate(Vector3.forward * Time.deltaTime * ScrollSpeed, Space.World);
+			Vector3 dir = transform.forward;
+			dir.y = 0;
+			dir.Normalize();
+			transform.Translate(dir * Time.deltaTime * ScrollSpeed, Space.World);
 		}
 		else if (Input.mousePosition.y <= Screen.height * ScrollEdge || Input.GetKey(KeyCode.DownArrow)) {
-			transform.Translate(Vector3.forward * Time.deltaTime * -ScrollSpeed, Space.World);
+			Vector3 dir = transform.forward;
+			dir.y = 0;
+			dir.Normalize();
+			transform.Translate(dir * Time.deltaTime * -ScrollSpeed, Space.World);
 		}
 
 		// ZOOM
@@ -55,10 +61,10 @@ public class CameraController : MonoBehaviour {
 
 		//rotations
 		if(Input.GetKey("p")) {
-			transform.Rotate(new Vector3(0,1,0), Space.World);
+			transform.Rotate(Vector3.up, Space.World);
 		}
 		if(Input.GetKey("m")) {
-			transform.Rotate(new Vector3(0,-1,0), Space.World);
+			transform.Rotate(Vector3.down, Space.World);
 		}
 		
 	}
