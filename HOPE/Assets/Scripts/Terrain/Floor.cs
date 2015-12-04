@@ -79,7 +79,13 @@ public class Floor : MonoBehaviour {
 
 		Vector3 vect = end.gameObject.transform.position - generatorObject.transform.position;
 
-		generatorObject.transform.Rotate(new Vector3(0, Vector3.Angle(new Vector3(0,0,1), vect), 0 ));
+
+		float ang=Vector3.Angle(new Vector3(0,0,1), vect);
+
+		if(vect.x<0)
+			ang=ang*(-1);
+
+		generatorObject.transform.Rotate(new Vector3(0, ang, 0 ));
 
 		currentObject = generatorObject;
 		generatorObject.tag = "Generator";
