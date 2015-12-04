@@ -41,6 +41,7 @@ public class Tower : MonoBehaviour {
 	void Update () {
 		if(updated>10) {
 			powered=false;
+			light(0f);
 			gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
 		updated++;
@@ -57,6 +58,7 @@ public class Tower : MonoBehaviour {
 	//Powers the tower during the next 10 frames
 	public void power() {
 		powered=true;
+		light(2.8f);
 		gameObject.GetComponent<Renderer>().material.color = Color.red;
 
 		updated=0;
@@ -73,8 +75,7 @@ public class Tower : MonoBehaviour {
 		projectile.GetComponent<LaserProjectile> ().setOriginEnd (transform.position, a.transform.position);		
 	}
 
-
-    private GameObject findClosestEnemy() {
+    	private GameObject findClosestEnemy() {
 		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
 		GameObject closest = null;
 
@@ -101,5 +102,12 @@ public class Tower : MonoBehaviour {
 
 	public void deleteRange() {
 		Destroy (towerRange);
+	}
+
+	public void light(float i) {
+		Component[] lights = GetComponentsInChildren<Light>();
+		foreach (Light l in lights) {
+			l.intensity = i;
+	        }
 	}
 }
