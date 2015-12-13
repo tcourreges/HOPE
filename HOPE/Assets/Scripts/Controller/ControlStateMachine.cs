@@ -33,13 +33,20 @@ public class ControlStateMachine : MonoBehaviour {
 			setState(controlState.deleteWall);
 		else if (Input.GetKeyDown("g"))
 			setState(controlState.generator1);
+		print (currentState);
 	}
 
 	public void setState(controlState s) {
 		currentState = s;
 		print("changing state: "+currentState);
 	}
+
 	public controlState getState() {
 		return currentState;
 	}
+
+	public void stateWall() { setState (controlState.wall); }
+	public void stateTower1() { setState (controlState.tower1); }
+	public void stateDelete() { setState (controlState.deleteWall); }
+	public void stateGenerator() { setState (controlState.generator1); }
 }
