@@ -20,6 +20,8 @@ public class Tower : MonoBehaviour {
 	private int updated;
 	public GameObject towerRangePrefab;
 	private GameObject towerRange;
+	public GameObject towerWallPrefab;
+	private GameObject towerWall;
 
 	private float range=4;
 	private int damage=2;
@@ -53,6 +55,9 @@ public class Tower : MonoBehaviour {
 			if(alien != null)
 				attack(alien);
 		}
+
+		if(powered && towerWall==null) wallRange();
+		if(!powered && towerWall!=null) Destroy (towerWall); 
 	}
 
 	//Powers the tower during the next 10 frames
@@ -98,6 +103,15 @@ public class Tower : MonoBehaviour {
 		            				Quaternion.identity
 		            				);
 		towerRange.GetComponent<TowerRange> ().initialize (range, gameObject);
+	}
+
+	private void wallRange() {
+		towerWall = (GameObject)Instantiate(	towerWallPrefab,
+		            				new Vector3(transform.position.x, transform.position.y+0.01f, transform.position.z),
+		            				Quaternion.identity
+		            				);
+		//towerWall.GetComponent<TowerRange> ().initialize (range, gameObject);
+		towerWall.transform.localScale = new Vector3(2 * range + 1, 1, 2 * range + 1);
 	}
 
 	public void deleteRange() {

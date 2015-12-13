@@ -7,19 +7,25 @@ TerrainGenerator class : instantiates all the Floor, and allows floor selection
 
 public class TerrainGenerator : MonoBehaviour {
 
-	public int sizeOfMap;
+	public int sizeOfMap=30;
 	public GameObject floorPrefab;
 	public GameObject wallPrefab;
 
+	public Floor[,] floors;
+
 	// Instantiate all the Floor on a sizeOfMap*sizeOfMap grid
 	void Start () {
+		floors=new Floor[100,100];
 		for (int i = 0 ; i < sizeOfMap ; i++) {
 			for (int j = 0 ; j < sizeOfMap ; j++) {
 				GameObject cube = (GameObject)Instantiate(floorPrefab, new Vector3(-sizeOfMap/2 + i + 0.5f, 0, -sizeOfMap/2 + j + 0.5f), Quaternion.identity);
 				cube.GetComponent<MeshRenderer>().enabled = false;
+				floors[i,j] =cube.GetComponent<Floor>();
 			}
 		}
 	}
+
+	public Floor[,] getFloors() { return floors;}
 
 	void Update() {
 
