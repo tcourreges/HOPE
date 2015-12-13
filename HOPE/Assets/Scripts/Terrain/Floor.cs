@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
 Floor class: basic element of the terrain grid
@@ -100,4 +101,31 @@ public class Floor : MonoBehaviour {
 			);
 	}
 
+	/*
+	public List<Floor> neighbours() {
+		List<Floor> res = new List<Floor>();
+
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
+		int i = 0;
+		while (i < hitColliders.Length) {			
+			if(hitColliders[i].tag == "Floor") {
+				res.Add(hitColliders[i].GetComponent<Floor>());
+				print(hitColliders[i]);
+			}
+			i++;
+		}
+		return res;
+	}*/
+
+	public bool walkable() {
+		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.3f);
+		int i = 0;
+		while (i < hitColliders.Length) {			
+			if(hitColliders[i].tag == "TowerWall") {
+				return false;
+			}
+			i++;
+		}
+		return isEmpty();
+	}
 }
