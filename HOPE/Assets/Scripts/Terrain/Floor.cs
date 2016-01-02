@@ -7,6 +7,10 @@ Floor class: basic element of the terrain grid
 Walls and Towers can be built on each Floor
 */
 
+public enum terrain{
+	empty, tower, generator, wall, underTower, unknown, outofmap
+};
+
 public class Floor : MonoBehaviour {
 
 	private GameObject currentObject;
@@ -19,13 +23,27 @@ public class Floor : MonoBehaviour {
 
 	public GameObject particlePrefab;
 
+	public terrain has;
+
+
+
+
 	public bool isEmpty() {return currentObject == null;}
+
+	void Start () {
+		has=terrain.empty;
+	}
+
+	void Update () {
+
+	}
 
 	//Instantiate a Wall above the Floor
 	public void createWall() {
 		if(!isEmpty())
 			return;
 
+		has=terrain.wall;
 		GameObject wallObject = (GameObject)Instantiate(	wallPrefab,
 									new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
 									Quaternion.identity
@@ -41,6 +59,7 @@ public class Floor : MonoBehaviour {
 		if(!isEmpty())
 			return;
 
+		has=terrain.tower;
 		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
 									new Vector3(transform.position.x, transform.position.y, transform.position.z),
 									Quaternion.identity
@@ -54,6 +73,7 @@ public class Floor : MonoBehaviour {
 	//Destroy the currentObject
 	public void deleteObject() {
 		Destroy(currentObject);
+		has=terrain.empty;
 	}
 
 	public void highlight() {
@@ -67,6 +87,7 @@ public class Floor : MonoBehaviour {
 		if(!isEmpty())
 			return;
 
+		has=terrain.generator;
 		GameObject generatorObject = (GameObject)Instantiate(	generatorPrefab,
 									new Vector3(transform.position.x, transform.position.y, transform.position.z),
 									Quaternion.identity
@@ -100,22 +121,6 @@ public class Floor : MonoBehaviour {
 				Quaternion.identity
 			);
 	}
-
-	/*
-	public List<Floor> neighbours() {
-		List<Floor> res = new List<Floor>();
-
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
-		int i = 0;
-		while (i < hitColliders.Length) {			
-			if(hitColliders[i].tag == "Floor") {
-				res.Add(hitColliders[i].GetComponent<Floor>());
-				print(hitColliders[i]);
-			}
-			i++;
-		}
-		return res;
-	}*/
 
 	public bool walkable() {
 		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.3f);

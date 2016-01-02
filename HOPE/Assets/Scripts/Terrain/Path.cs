@@ -22,7 +22,8 @@ public class Path : MonoBehaviour {
 	void Update () {
 		if(done) {
 			marked=new bool[100,100];
-			print(dfs(x0,y0)); return;}
+			//print(dfs(x0,y0)); return;
+		}
 		done=true;
 
 		floors=tg.getFloors();
