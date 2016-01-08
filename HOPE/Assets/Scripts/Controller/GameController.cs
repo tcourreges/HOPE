@@ -24,6 +24,12 @@ public class GameController : MonoBehaviour {
 		foreach(GameObject toto in GameObject.FindGameObjectsWithTag("Laser")) {
 			toto.GetComponent<Laser>().updateLaser();
 		}*/
+		if(sm.getState() == controlState.simulation1) {
+			spawnAgents();
+			sm.setState(controlState.simulation2);
+		}
+		if(sm.getState() == controlState.simulation2)
+			return;
 
 		Floor f=tg.getFloor();
 		if(f!=null) {
@@ -64,5 +70,22 @@ public class GameController : MonoBehaviour {
 		}
 
 	
+	}
+
+	private void spawnAgents() {
+		GameObject[] spawns = GameObject.FindGameObjectsWithTag("AlienSpawn");
+        
+		foreach (GameObject a in spawns) {
+			a.GetComponent<AlienSpawn>().spawnAlien();
+			Destroy(a);
+		}
+
+		GameObject[] spawns2 = GameObject.FindGameObjectsWithTag("RobotSpawn");
+        
+		foreach (GameObject r in spawns2) {
+			r.GetComponent<RobotSpawn>().spawnRobot();
+			Destroy(r);
+		}
+
 	}
 }

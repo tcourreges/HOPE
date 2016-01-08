@@ -16,6 +16,11 @@ public class HealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(alien==null) {
+			Destroy(transform.gameObject);
+			return;
+		}
+
 		transform.position = alien.transform.position;
 		transform.Translate(new Vector3(0,1,0));
 
