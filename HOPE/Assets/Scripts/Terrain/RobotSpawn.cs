@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AlienSpawn : MonoBehaviour {
+public class RobotSpawn : MonoBehaviour {
 
-	public GameObject alienPrefab;
+	public GameObject robotPrefab;
 	public GameObject particlePrefab;
 	public int x;
 	public int y;
@@ -19,17 +19,18 @@ public class AlienSpawn : MonoBehaviour {
 	}
 
 	//Instantiate a Wall above the Floor
-	public void spawnAlien() {
-		GameObject alien = (GameObject)Instantiate(	alienPrefab,
-									new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
-									Quaternion.identity
-								);
-		Alien a=alien.GetComponent<Alien>();
-		a.x=x;
-		a.y=y;
-		a.id=id;
-		a.floors=tg.getFloors();
-
+	public void spawnRobot() {
+		print("hi");
+		GameObject robot = (GameObject)Instantiate(	robotPrefab,
+								new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
+								Quaternion.identity
+							);
+		Robot r=robot.GetComponent<Robot>();
+		/*r.x=x;
+		r.y=y;
+		r.id=id;
+		r.floors=tg.getFloors();
+*/
 		//Destroy(transform.gameObject);
 	}
 

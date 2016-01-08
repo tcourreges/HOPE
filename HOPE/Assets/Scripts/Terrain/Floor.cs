@@ -26,9 +26,6 @@ public class Floor : MonoBehaviour {
 
 	public terrain has;
 
-
-
-
 	public bool isEmpty() {return currentObject == null;}
 
 	void Start () {

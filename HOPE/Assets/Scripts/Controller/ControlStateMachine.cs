@@ -7,7 +7,8 @@ public enum controlState{
 	idle, //default
 	tower1, //tower selected
 	wall, deleteWall,
-	generator1, generator2, generator3
+	generator1, generator2, generator3,
+	simulation1, simulation2
 };
 
 /*
@@ -25,14 +26,18 @@ public class ControlStateMachine : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown("t"))
-			setState(controlState.tower1);
-		else if (Input.GetKeyDown("w"))
-			setState(controlState.wall);
-		else if (Input.GetKeyDown("x"))
-			setState(controlState.deleteWall);
-		else if (Input.GetKeyDown("g"))
-			setState(controlState.generator1);
+		if(currentState!=controlState.simulation2) {
+			if (Input.GetKeyDown("t"))
+				setState(controlState.tower1);
+			else if (Input.GetKeyDown("w"))
+				setState(controlState.wall);
+			else if (Input.GetKeyDown("x"))
+				setState(controlState.deleteWall);
+			else if (Input.GetKeyDown("g"))
+				setState(controlState.generator1);
+			else if (Input.GetKeyDown("s"))
+				setState(controlState.simulation1);
+		}
 	}
 
 	public void setState(controlState s) {
