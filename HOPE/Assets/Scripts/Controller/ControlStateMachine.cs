@@ -44,7 +44,13 @@ public class ControlStateMachine : MonoBehaviour {
 		return currentState;
 	}
 
-	public void stateWall() { setState (controlState.wall); }
+	public void stateWall() {
+		if (currentState == controlState.wall) {
+			setState (controlState.idle);
+		} else {
+			setState (controlState.wall);
+		}
+	}
 	public void stateTower1() { setState (controlState.tower1); }
 	public void stateDelete() { setState (controlState.deleteWall); }
 	public void stateGenerator() { setState (controlState.generator1); }
