@@ -177,7 +177,7 @@ public class Alien : MonoBehaviour {
 
 		        //foreach (Vector3 w in neighbours.orderRandomly())
 			int[] indexes = new int[] {0,1,2,3};
-			//shuffle(indexes);
+			shuffle(indexes);
 			foreach(int n in indexes)
 		        {
 			    Vector3 w = neighbours[n];
