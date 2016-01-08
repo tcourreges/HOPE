@@ -22,6 +22,7 @@ public class Floor : MonoBehaviour {
 	public GameObject laserPrefab;
 
 	public GameObject particlePrefab;
+	public GameObject particlePrefab2;
 
 	public terrain has;
 
@@ -51,7 +52,7 @@ public class Floor : MonoBehaviour {
 		currentObject = wallObject;
 		wallObject.tag = "Wall";
 
-		emitParticles();
+		emitParticles(1);
 	}
 	
 	//Instantiate a Tower above the Floor
@@ -67,7 +68,7 @@ public class Floor : MonoBehaviour {
 		currentObject = towerObject;
 		towerObject.tag = "Tower";
 
-		emitParticles();
+		emitParticles(1);
 	}
 
 	//Destroy the currentObject
@@ -112,24 +113,33 @@ public class Floor : MonoBehaviour {
 		currentObject = generatorObject;
 		generatorObject.tag = "Generator";
 
-		emitParticles();
+		emitParticles(1);
 	}
 
-	private void emitParticles() {
+	public void emitParticles(int i) {
+		if(i==1)
 		Instantiate(	particlePrefab,
+				new Vector3(transform.position.x, transform.position.y, transform.position.z),
+				Quaternion.identity
+			);
+		else
+		Instantiate(	particlePrefab2,
 				new Vector3(transform.position.x, transform.position.y, transform.position.z),
 				Quaternion.identity
 			);
 	}
 
-	public bool walkable() {
-		Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.3f);
-		int i = 0;
-		while (i < hitColliders.Length) {			
-			if(hitColliders[i].tag == "TowerWall") {
-				return false;
+	public bool walkable(bool avoidTowers) {
+		if(avoidTowers) {		
+			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5.0f);
+			int i = 0;
+			while (i < hitColliders.Length) {			
+				if(hitColliders[i].tag == "Tower") {
+					if(hitColliders[i].GetComponent<Tower>().powered)
+							return false;
+				}
+				i++;
 			}
-			i++;
 		}
 		return isEmpty();
 	}

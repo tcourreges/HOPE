@@ -10,6 +10,7 @@ public class TerrainGenerator : MonoBehaviour {
 	public int sizeOfMap=30;
 	public GameObject floorPrefab;
 	public GameObject wallPrefab;
+	public Vector3 coreLocation;
 
 	public Floor[,] floors;
 
@@ -25,10 +26,11 @@ public class TerrainGenerator : MonoBehaviour {
 		}
 	}
 
-	public Floor[,] getFloors() { return floors;}
+	public Floor[,] getFloors() { 
+	print("requesting floors");
+	return floors;}
 
 	void Update() {
-
 	}
 
 	//returns clicked Floor (iterates through raycast and returns first Floor element found)

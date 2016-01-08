@@ -56,8 +56,8 @@ public class Tower : MonoBehaviour {
 				attack(alien);
 		}
 
-		if(powered && towerWall==null) wallRange();
-		if(!powered && towerWall!=null) Destroy (towerWall); 
+		//if(powered && towerWall==null) wallRange();
+		//if(!powered && towerWall!=null) Destroy (towerWall); 
 	}
 
 	//Powers the tower during the next 10 frames

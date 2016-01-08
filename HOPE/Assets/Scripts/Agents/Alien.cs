@@ -8,25 +8,34 @@ public class Alien : MonoBehaviour {
 	private int healthMax=4;
 	private int health;
 
-	private int sight=4;
+	private int sight=8;
 
 	private HealthBar healthBar;
 	public HealthBar healthBarPrefab;
+
+	public int id;
 
 	public GameObject explosionParticles;
 
 	private terrain[,] map;
 	public Floor[,] floors;
 	public int x,y;
-	public bool[,] marked;
+	private int xtarget, ytarget;
+	private bool[,] marked;
 
 	private bool actionDone;
 	public TerrainGenerator tg;
+
+	private bool foundCore=false;
+
+	private Vector3[,] from;
 
 	NavMeshAgent agent;// = GetComponent<NavMeshAgent>();
 
 	// Use this for initialization
 	void Start () {
+		print(id+" creating alien");
+
 		health=healthMax;
 
 		healthBar = (HealthBar)Instantiate(	healthBarPrefab,
@@ -34,8 +43,10 @@ public class Alien : MonoBehaviour {
 							Quaternion.identity
 			  		);
 		healthBar.setAlien(this);
-		floors=tg.getFloors();
+
+		xtarget=x; ytarget=y;
 		map = new terrain[100,100];
+		from = new Vector3[100,100];
 		for(int i=0; i<100; i++)
 			for(int j=0; j<100; j++)
 				if(i<tg.sizeOfMap && j<tg.sizeOfMap)
@@ -52,38 +63,70 @@ public class Alien : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		floors=tg.getFloors();
-
 		if(atDestination()) {
-			mapPosition();
-			Vector3 toexplore = findClosestUnknown();
-			if(toexplore.z==-1){
-				//print("donexploring");
-			} else {
-				//print(toexplore.x +" "+ toexplore.y);
-				moveTo((int) toexplore.x, (int) toexplore.y);
+			if(x==xtarget && y==ytarget) {
+				mapPosition();
+
+				if(foundCore) {
+					print(id+" found core");
+
+					moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
+				}
+				else {
+					Vector3 toexplore = findClosestUnknown(true);
+					if(toexplore.z==-1){
+						print(id+" through towers");
+						toexplore = findClosestUnknown(false);
+					}
+					if(toexplore.z!=-1) {
+						print(id+" next location : "+toexplore.x+" "+toexplore.y);
+						xtarget = (int)toexplore.x;
+						ytarget = (int)toexplore.y;
+						moveTo((int) toexplore.x, (int) toexplore.y);
+					}
+				}
+			}
+			else {
+				stepTowards(xtarget,ytarget);
 			}
 		}
 		else {
-			moveTo(x,y);	
-		}/**/
+			moveTo(x,y);
+			//floors[xtarget,ytarget].emitParticles(2);	
+		}
 	}
 
 	private void mapPosition() {
 		for(int i=x-sight; i<x+sight; i++)
 			for(int j=y-sight; j<y+sight; j++)
-				if(fitsMap(i,j))
+				if(fitsMap(i,j)) {
+					if(i == (int) tg.coreLocation.x && j == (int) tg.coreLocation.y)
+						foundCore=true;
 					if(map[i,j]==terrain.unknown) {
 						map[i,j] = floors[i,j].has;
 					}
-		//print(map);
+				}
 	}
 
 	private bool fitsMap(int i, int j) {
 		return (i>=0 && i<tg.sizeOfMap && j>=0 && j<tg.sizeOfMap);
 	}
 
+	private void stepTowards(int _x, int _y) {
+		int x1=_x; int y1=_y;
+		int x2=_x; int y2=_y;
+
+		while(!(x==x1 && y==y1)) {
+			x2=x1; y2=y1;
+			Vector3 v=from[x2, y2];
+			x1=(int)v.x;
+			y1=(int)v.y;
+		}
+		moveTo(x2, y2);
+	}
+
 	private void moveTo(int _x, int _y) {
+		//print(id+"  moveto "+x+" "+y);
 		Vector3 dest = floors[_x,_y].gameObject.transform.position;
 		dest.y = 1.5f;
 		agent.destination = dest;
@@ -96,7 +139,7 @@ public class Alien : MonoBehaviour {
 		return (dist < 0.1);
 	}
 
-	private Vector3 findClosestUnknown() {
+	private Vector3 findClosestUnknown(bool avoidTower) {
             var queue = new Queue<Vector3>();
             queue.Enqueue(new Vector3(x,y,0));
 
@@ -109,36 +152,55 @@ public class Alien : MonoBehaviour {
 		it++;
 		//print(it);
 	        if(it>tg.sizeOfMap*tg.sizeOfMap) {
-			//print(queue.Count);
+			print("error "+it);
 			return new Vector3(0,0,-1);
 		}
                 Vector3 v = queue.Dequeue();
 		int i=(int)v.x;
 		int j=(int)v.y;
 
-		marked[i,j] = true;
+		//floors[i,j].emitParticles(1);
 		//print(i+" "+j);
 
-		if(map[i,j]==terrain.unknown && floors[i,j].walkable())
+		if(map[i,j]==terrain.unknown && floors[i,j].walkable(avoidTower)) {
+			//floors[i,j].emitParticles(2);
 			return v;
+		}
 
-		if(floors[i,j].walkable()) {
+		if(floors[i,j].walkable(avoidTower)) {
 		//if(map[i,j]==terrain.empty) {
 			List<Vector3> neighbours = new List<Vector3>();
 			neighbours.Add(new Vector3(	i-1,	j,0));
 			neighbours.Add(new Vector3(	i+1,	j,0));
 			neighbours.Add(new Vector3(	i,	j-1,0));
 			neighbours.Add(new Vector3(	i,	j+1,0));
-		        foreach (Vector3 w in neighbours)
+
+		        //foreach (Vector3 w in neighbours.orderRandomly())
+			int[] indexes = new int[] {0,1,2,3};
+			//shuffle(indexes);
+			foreach(int n in indexes)
 		        {
+			    Vector3 w = neighbours[n];
 		            if (fitsMap((int)w.x, (int)w.y) && !marked[(int)w.x, (int)w.y])
 		            {
+				marked[(int)w.x, (int)w.y]=true;
+				from[(int)w.x,(int)w.y]=v;
 		                queue.Enqueue(w);
 		            }
 		        }
 		}
             }
 	    return new Vector3(0,0,-1);
+	}
+
+	void shuffle(int[] v) {
+		for (int t = 0; t < v.Length; t++ )
+		{
+		    int tmp = v[t];
+		    int r = UnityEngine.Random.Range(t, v.Length);
+		    v[t] = v[r];
+		    v[r] = tmp;
+		}
 	}
 
 	/* ---------------------------------- */

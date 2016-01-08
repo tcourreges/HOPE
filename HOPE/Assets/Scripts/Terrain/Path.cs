@@ -41,10 +41,10 @@ public class Path : MonoBehaviour {
 
 		bool res=false;
 
-		if(x>0 && !marked[x-1,y] && floors[x-1,y].walkable())		res = res || dfs(x-1,y);
-		if(x<sizeOfMap-1 && !marked[x+1,y] && floors[x+1,y].walkable())	res = res || dfs(x+1,y);
-		if(y>0 && !marked[x,y-1] && floors[x,y-1].walkable()) 		res = res || dfs(x,y-1);
-		if(y<sizeOfMap-1 && !marked[x,y+1]&& floors[x,y+1].walkable()) 	res = res || dfs(x,y+1);
+		if(x>0 && !marked[x-1,y] && floors[x-1,y].walkable(false))		res = res || dfs(x-1,y);
+		if(x<sizeOfMap-1 && !marked[x+1,y] && floors[x+1,y].walkable(false))	res = res || dfs(x+1,y);
+		if(y>0 && !marked[x,y-1] && floors[x,y-1].walkable(false)) 		res = res || dfs(x,y-1);
+		if(y<sizeOfMap-1 && !marked[x,y+1]&& floors[x,y+1].walkable(false)) 	res = res || dfs(x,y+1);
 
 		return res;
 
