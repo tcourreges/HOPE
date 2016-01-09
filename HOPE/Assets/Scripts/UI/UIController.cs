@@ -5,14 +5,26 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour {
 
 	public ControlStateMachine controlStateMachine;
+	public GameController gameController;
 	public Toggle generatorToggle;
+	public Text mineralCount;
+	public Text wallPrice;
+	public Text towerPrice;
+	public Text generatorPrice;
 
+	private float minerals;
+	private float mineralsTarget;
+	private float velocity = 0;
 	private GameObject[] buttons;
 	private GameObject[] toggles;
 
 	void Start () {
 		buttons = GameObject.FindGameObjectsWithTag ("Button");
 		toggles = GameObject.FindGameObjectsWithTag ("Toggle");
+		wallPrice.text = gameController.wallCost.ToString();
+		towerPrice.text = gameController.towerCost.ToString();
+		generatorPrice.text = gameController.generatorCost.ToString();
+		minerals = gameController.minerals;
 	}
 
 	void Update () {
@@ -27,6 +39,9 @@ public class UIController : MonoBehaviour {
 				t.GetComponent<Toggle>().interactable = false;
 			}
 		}
+		mineralsTarget = gameController.minerals;
+		minerals = Mathf.SmoothDamp ((float)minerals, (float)mineralsTarget, ref velocity, 0.2f);
+		mineralCount.text = ((int)minerals).ToString();
 	}
 
 	public void menu() {

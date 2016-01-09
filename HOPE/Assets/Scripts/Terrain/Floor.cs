@@ -37,9 +37,9 @@ public class Floor : MonoBehaviour {
 	}
 
 	//Instantiate a Wall above the Floor
-	public void createWall() {
+	public bool createWall() {
 		if(!isEmpty())
-			return;
+			return false;
 
 		has=terrain.wall;
 		GameObject wallObject = (GameObject)Instantiate(	wallPrefab,
@@ -50,12 +50,14 @@ public class Floor : MonoBehaviour {
 		wallObject.tag = "Wall";
 
 		emitParticles(1);
+
+		return true;
 	}
 	
 	//Instantiate a Tower above the Floor
-	public void createTower(towerType t) {
+	public bool createTower(towerType t) {
 		if(!isEmpty())
-			return;
+			return false;
 
 		has=terrain.tower;
 		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
@@ -66,12 +68,19 @@ public class Floor : MonoBehaviour {
 		towerObject.tag = "Tower";
 
 		emitParticles(1);
+
+		return true;
 	}
 
 	//Destroy the currentObject
-	public void deleteObject() {
+	public string deleteObject() {
+		if (isEmpty ())
+			return "";
+		
+		string tag = currentObject.tag;
 		Destroy(currentObject);
 		has=terrain.empty;
+		return tag;
 	}
 
 	public void highlight() {
@@ -81,9 +90,9 @@ public class Floor : MonoBehaviour {
 							);
 	}
 
-	public void createGenerator(Floor end) {
+	public bool createGenerator(Floor end) {
 		if(!isEmpty())
-			return;
+			return false;
 
 		has=terrain.generator;
 		GameObject generatorObject = (GameObject)Instantiate(	generatorPrefab,
@@ -111,6 +120,8 @@ public class Floor : MonoBehaviour {
 		generatorObject.tag = "Generator";
 
 		emitParticles(1);
+
+		return true;
 	}
 
 	public void emitParticles(int i) {

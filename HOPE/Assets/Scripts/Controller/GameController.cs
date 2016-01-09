@@ -10,6 +10,11 @@ public class GameController : MonoBehaviour {
 	public ControlStateMachine sm;
 	public TerrainGenerator tg;
 
+	public int minerals;
+	public int wallCost;
+	public int towerCost;
+	public int generatorCost;
+
 	private Floor lastFloor;
 
 	void Start () {
@@ -38,24 +43,34 @@ public class GameController : MonoBehaviour {
 				f.highlight();
 
 			if(Input.GetMouseButton (0)) {
-				if(sm.getState() == controlState.wall) {
-					f.createWall();
+				if(sm.getState() == controlState.wall && minerals >= wallCost) {
+					if (f.createWall())
+						minerals -= wallCost;
 				}
 
-				else if(sm.getState() == controlState.tower1) {
-					f.createTower(towerType.tower1);
+				else if(sm.getState() == controlState.tower1 && minerals >= towerCost) {
+					if(f.createTower(towerType.tower1))
+						minerals -= towerCost;
 				}
 
 				else if(sm.getState() == controlState.deleteWall) {
-					f.deleteObject();
+					string tag = f.deleteObject();
+					if (tag == "Wall") {
+						minerals += wallCost;
+					} else if (tag == "Tower") {
+						minerals += towerCost;
+					} else if (tag == "Generator") {
+						minerals += generatorCost;
+					}
 				}
 
-				else if(sm.getState() == controlState.generator1) {
+				else if(sm.getState() == controlState.generator1 && minerals >= generatorCost) {
 					lastFloor=f;
 					sm.setState(controlState.generator2);
 				}
-				else if(sm.getState() == controlState.generator3) {
-					lastFloor.createGenerator(f);					
+				else if(sm.getState() == controlState.generator3 && minerals >= generatorCost) {
+					if(lastFloor.createGenerator(f))
+						minerals -= generatorCost;
 					
 					lastFloor = null;
 					sm.setState(controlState.idle);
@@ -86,6 +101,5 @@ public class GameController : MonoBehaviour {
 			r.GetComponent<RobotSpawn>().spawnRobot();
 			Destroy(r);
 		}
-
 	}
 }
