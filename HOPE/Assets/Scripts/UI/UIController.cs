@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour {
 		}
 		mineralsTarget = gameController.minerals;
 		minerals = Mathf.SmoothDamp ((float)minerals, (float)mineralsTarget, ref velocity, 0.2f);
-		mineralCount.text = ((int)minerals).ToString();
+		mineralCount.text = ((int)Mathf.Round(minerals)).ToString();
 	}
 
 	public void menu() {
