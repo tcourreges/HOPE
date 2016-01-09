@@ -28,4 +28,8 @@ public class UIController : MonoBehaviour {
 			}
 		}
 	}
+
+	public void menu() {
+		Application.LoadLevel (0);
+	}
 }
