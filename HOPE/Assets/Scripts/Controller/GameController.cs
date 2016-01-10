@@ -11,9 +11,9 @@ public class GameController : MonoBehaviour {
 	public TerrainGenerator tg;
 
 	public int minerals;
-	public int wallCost;
-	public int towerCost;
-	public int generatorCost;
+	public static int wallCost = 50;
+	public static int towerCost = 200;
+	public static int generatorCost = 250;
 
 	private Floor lastFloor;
 

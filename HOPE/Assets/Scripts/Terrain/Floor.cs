@@ -23,6 +23,7 @@ public class Floor : MonoBehaviour {
 
 	public GameObject particlePrefab;
 	public GameObject particlePrefab2;
+	public GameObject mineralSpritePrefab;
 
 	public terrain has;
 
@@ -48,7 +49,8 @@ public class Floor : MonoBehaviour {
 								);
 		currentObject = wallObject;
 		wallObject.tag = "Wall";
-
+		
+		emitMineralSprite ("-", GameController.wallCost.ToString());
 		emitParticles(1);
 
 		return true;
@@ -67,6 +69,7 @@ public class Floor : MonoBehaviour {
 		currentObject = towerObject;
 		towerObject.tag = "Tower";
 
+		emitMineralSprite ("-", GameController.towerCost.ToString());
 		emitParticles(1);
 
 		return true;
@@ -78,6 +81,15 @@ public class Floor : MonoBehaviour {
 			return "";
 		
 		string tag = currentObject.tag;
+
+		if (tag == "Wall") {
+			emitMineralSprite("+", GameController.wallCost.ToString());
+		} else if (tag == "Tower") {
+			emitMineralSprite("+", GameController.towerCost.ToString());
+		} else if (tag == "Generator") {
+			emitMineralSprite("+", GameController.generatorCost.ToString());
+		}
+
 		Destroy(currentObject);
 		has=terrain.empty;
 		return tag;
@@ -119,9 +131,18 @@ public class Floor : MonoBehaviour {
 		currentObject = generatorObject;
 		generatorObject.tag = "Generator";
 
+		emitMineralSprite ("-", GameController.generatorCost.ToString());
 		emitParticles(1);
 
 		return true;
+	}
+
+	public void emitMineralSprite(string sign, string price) {
+		GameObject mineralSpriteObject = (GameObject)Instantiate (mineralSpritePrefab,
+		                                                          new Vector3 (transform.position.x, transform.position.y + 3f, transform.position.z),
+		                                                          Quaternion.identity
+		                                                          );
+		mineralSpriteObject.GetComponent<MineralSprite> ().setText (sign, price);
 	}
 
 	public void emitParticles(int i) {
