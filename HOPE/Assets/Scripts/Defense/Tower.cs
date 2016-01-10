@@ -22,6 +22,8 @@ public class Tower : MonoBehaviour {
 	private GameObject towerRange;
 	public GameObject towerWallPrefab;
 	private GameObject towerWall;
+	public GameObject poweredParticlePrefab;
+	private GameObject poweredParticle;
 
 	private float range=4;
 	private int damage=2;
@@ -43,6 +45,7 @@ public class Tower : MonoBehaviour {
 	void Update () {
 		if(updated>10) {
 			powered=false;
+			Destroy (poweredParticle);
 			light(0f);
 			gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
@@ -65,7 +68,12 @@ public class Tower : MonoBehaviour {
 		powered=true;
 		light(2.8f);
 		gameObject.GetComponent<Renderer>().material.color = Color.red;
-
+		if (poweredParticle == null) {
+			poweredParticle = (GameObject)Instantiate (poweredParticlePrefab,
+		                                          new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z),
+		                                          Quaternion.identity
+			);
+		}
 		updated=0;
 	}
 
