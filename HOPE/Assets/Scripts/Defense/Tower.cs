@@ -26,7 +26,7 @@ public class Tower : MonoBehaviour {
 	private GameObject poweredParticle;
 
 	private float range=4;
-	private int damage=2;
+	private int damage=25;
 	private int reload=60;
 
 	private int currentReload;

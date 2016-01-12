@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Alien : MonoBehaviour {
 
-	private int healthMax=4;
+	private int healthMax=100;
 	private int health;
 
 	private int sight=8;
