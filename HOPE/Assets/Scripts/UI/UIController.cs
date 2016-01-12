@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour {
 	public Text wallPrice;
 	public Text towerPrice;
 	public Text generatorPrice;
+	public GameObject confirmationMessageBoxPrefab;
 
 	private float minerals;
 	private float mineralsTarget;
@@ -61,8 +62,20 @@ public class UIController : MonoBehaviour {
 		mineralCount.text = ((int)Mathf.Round(minerals)).ToString();
 	}
 
+	public void menuConfirmation() {
+		GameObject confirmationMessageBox = (GameObject)Instantiate (confirmationMessageBoxPrefab, new Vector3 (0, 0, 0), Quaternion.identity);
+		confirmationMessageBox.transform.SetParent(gameObject.transform, false);
+	}
+
 	public void menu() {
 		Application.LoadLevel (0);
+	}
+
+	public void destroyConfirmationMessageBoxes() {
+		GameObject[] confirmationMessageBoxes = GameObject.FindGameObjectsWithTag ("ConfirmationMessageBox");
+		foreach (GameObject cMB in confirmationMessageBoxes) {
+			Destroy(cMB);
+		}
 	}
 	
 	public void toggleOff() {
