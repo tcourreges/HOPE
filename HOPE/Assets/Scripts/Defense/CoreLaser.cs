@@ -49,6 +49,12 @@ public class CoreLaser : MonoBehaviour {
 					break;
 					}
 			}
+			if(col.tag == "Alien") {
+				if(col.GetComponent<Alien>().transparent==false) {
+					line.SetPosition(1, hit.point);
+					break;
+				}
+			}
 			if(col.tag == "Wall" || col.tag == "Border") {
 				line.SetPosition(1, hit.point);
 				break;

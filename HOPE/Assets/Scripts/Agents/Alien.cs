@@ -24,6 +24,8 @@ public class Alien : MonoBehaviour {
 	private int xtarget, ytarget;
 	private bool[,] marked;
 
+	public bool transparent=false;
+
 	private bool actionDone;
 	public TerrainGenerator tg;
 
