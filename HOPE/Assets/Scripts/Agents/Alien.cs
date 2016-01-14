@@ -26,12 +26,19 @@ public class Alien : MonoBehaviour {
 
 	public bool transparent=false;
 
-	private bool actionDone;
 	public TerrainGenerator tg;
 
 	private bool foundCore=false;
 
+	public int alienType=0;
+
 	private Vector3[,] from;
+
+	public bool stuck=false;
+	public int hitByLaser=0;
+
+	private int laserx=-1, lasery=-1;
+	private bool backToLaser=false;
 
 	NavMeshAgent agent;// = GetComponent<NavMeshAgent>();
 
@@ -56,8 +63,6 @@ public class Alien : MonoBehaviour {
 					map[i,j]=terrain.unknown;
 				else
 					map[i,j]=terrain.outofmap;
-		
-		actionDone = false;
 
 		agent = GetComponent<NavMeshAgent>();
 	}
@@ -70,38 +75,98 @@ public class Alien : MonoBehaviour {
 		if(cdSpeed<0)
 			agent.speed=2;
 
+		if(stuck)
+			return;
 
-		if(atDestination()) {
-			if(x==xtarget && y==ytarget) {
-				mapPosition();
+		//print(hitByLaser);
 
-				if(foundCore) {
-					print(id+" found core");
+		if(alienType==0) {
+			if(atDestination()) {
+				if(x==xtarget && y==ytarget) {
+					mapPosition();
 
-					moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
+					if(foundCore) {
+						//print(id+" found core");
+
+						moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
+					}
+					else {
+						Vector3 toexplore = findClosestUnknown(true);
+						if(toexplore.z==-1){
+							//print(id+" through towers");
+							toexplore = findClosestUnknown(false);
+						}
+						if(toexplore.z!=-1) {
+							//print(id+" next location : "+toexplore.x+" "+toexplore.y);
+							xtarget = (int)toexplore.x;
+							ytarget = (int)toexplore.y;
+							moveTo((int) toexplore.x, (int) toexplore.y);
+						}
+						else {
+							stuck=true;
+						}
+					}
 				}
 				else {
-					Vector3 toexplore = findClosestUnknown(true);
-					if(toexplore.z==-1){
-						print(id+" through towers");
-						toexplore = findClosestUnknown(false);
-					}
-					if(toexplore.z!=-1) {
-						print(id+" next location : "+toexplore.x+" "+toexplore.y);
-						xtarget = (int)toexplore.x;
-						ytarget = (int)toexplore.y;
-						moveTo((int) toexplore.x, (int) toexplore.y);
-					}
+					stepTowards(xtarget,ytarget);
 				}
 			}
 			else {
-				stepTowards(xtarget,ytarget);
+				moveTo(x,y);
+				//floors[xtarget,ytarget].emitParticles(2);	
 			}
 		}
 		else {
-			moveTo(x,y);
-			//floors[xtarget,ytarget].emitParticles(2);	
+			if(atDestination()) {
+				if(hitByLaser>0 && laserx==-1) {
+					//print("foundlaser");
+					laserx=x;
+					lasery=y;
+				}
+				else if(x==xtarget && y==ytarget) {
+					mapPosition();
+
+					if(backToLaser)
+						return;
+
+					if(foundCore) {
+						//print(id+" found core");
+
+						moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
+					}
+					else {
+						Vector3 toexplore = findClosestUnknown(true);
+						if(toexplore.z!=-1) {
+							//print(id+" next location : "+toexplore.x+" "+toexplore.y);
+							xtarget = (int)toexplore.x;
+							ytarget = (int)toexplore.y;
+							moveTo((int) toexplore.x, (int) toexplore.y);
+						}
+						else {
+							if(laserx!=-1) {
+								//print("stuck so i go back to laser");
+								xtarget=laserx;
+								ytarget=lasery;
+								backToLaser=true;
+							}
+							else {
+								stuck=true;
+							}
+						}
+					}
+				}
+				else {
+					stepTowards(xtarget,ytarget);
+				}
+			}
+			else {
+				moveTo(x,y);
+				//floors[xtarget,ytarget].emitParticles(2);	
+			}
 		}
+		
+		if(hitByLaser>0)
+			hitByLaser--;
 	}
 
 	private void mapPosition() {

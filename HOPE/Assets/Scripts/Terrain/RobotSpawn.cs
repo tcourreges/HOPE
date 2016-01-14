@@ -10,6 +10,8 @@ public class RobotSpawn : MonoBehaviour {
 	public int y;
 	public int id;
 
+	public float xtarget, ytarget;
+
 	public TerrainGenerator tg;
 
 	void Start () {
@@ -18,14 +20,14 @@ public class RobotSpawn : MonoBehaviour {
 	void Update () {
 	}
 
-	//Instantiate a Wall above the Floor
 	public void spawnRobot() {
-		print("hi");
 		GameObject robot = (GameObject)Instantiate(	robotPrefab,
 								new Vector3(transform.position.x, transform.position.y+1.5f, transform.position.z),
 								Quaternion.identity
 							);
 		Robot r=robot.GetComponent<Robot>();
+
+		r.setDestination(xtarget,ytarget);
 		/*r.x=x;
 		r.y=y;
 		r.id=id;

@@ -67,6 +67,7 @@ public class Laser : MonoBehaviour {
 				}
 				if(col.tag == "Alien") {
 					if(col.GetComponent<Alien>().transparent==false) {
+						col.GetComponent<Alien>().hitByLaser=10;
 						line.SetPosition(1, hit.point);
 						break;
 					}
