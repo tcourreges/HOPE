@@ -18,6 +18,7 @@ public class Obstacle : MonoBehaviour {
 			done=true;
 			f.GetComponent<Floor>().canEdit=false;
 			f.GetComponent<Floor>().has=terrain.obstacle;
+			gameObject.GetComponent<MeshRenderer>().enabled = false;
 		}
 	}
 
