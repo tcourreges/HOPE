@@ -18,6 +18,7 @@ StateMachine that keeps track of the current interaction mode (whether the user 
 public class ControlStateMachine : MonoBehaviour {
 
 	private controlState currentState;
+	private towerType currentType;
 
 	// Use this for initialization
 	void Start () {
@@ -36,8 +37,16 @@ public class ControlStateMachine : MonoBehaviour {
 		print("changing state: "+currentState);
 	}
 
+	public void setTowerType(towerType t) {
+		currentType = t;
+	}
+
 	public controlState getState() {
 		return currentState;
+	}
+
+	public towerType getTowerType() {
+		return currentType;
 	}
 
 	public void stateWall() {
@@ -53,6 +62,25 @@ public class ControlStateMachine : MonoBehaviour {
 			setState (controlState.idle);
 		} else {
 			setState (controlState.tower1);
+			setTowerType(towerType.tower1);
+		}
+	}
+
+	public void stateTower2() {
+		if (currentState == controlState.tower1) {
+			setState (controlState.idle);
+		} else {
+			setState (controlState.tower1);
+			setTowerType(towerType.tower2);
+		}
+	}
+
+	public void stateTower3() {
+		if (currentState == controlState.tower1) {
+			setState (controlState.idle);
+		} else {
+			setState (controlState.tower1);
+			setTowerType(towerType.tower3);
 		}
 	}
 
