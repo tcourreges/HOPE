@@ -47,7 +47,7 @@ public class UIController : MonoBehaviour {
 			else if (Input.GetKeyDown("g"))
 				changeValue (generatorToggle);
 			else if (Input.GetKeyDown("s"))
-				startSimulation ();
+				startStopSimulation ();
 		}
 
 		if (controlStateMachine.getState () == controlState.generator2) {
@@ -98,9 +98,15 @@ public class UIController : MonoBehaviour {
 		}
 	}
 
-	public void startSimulation() {
-		toggleOff ();
-		controlStateMachine.stateSimulation1();
+	public void startStopSimulation() {
+		if (controlStateMachine.getState () != controlState.simulation1 && controlStateMachine.getState () != controlState.simulation2) {
+			toggleOff ();
+			controlStateMachine.stateSimulation1 ();
+			startButton.transform.GetChild(0).GetComponent<Text>().text = "Stop";
+		} else {
+			controlStateMachine.stateSimulation3 ();
+			startButton.transform.GetChild(0).GetComponent<Text>().text = "Start";
+		}
 	}
 
 	public void changeValue(Toggle toggle) {
