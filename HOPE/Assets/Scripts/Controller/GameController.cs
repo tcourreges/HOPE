@@ -12,7 +12,9 @@ public class GameController : MonoBehaviour {
 
 	public int minerals;
 	public static int wallCost = 50;
-	public static int towerCost = 200;
+	public static int tower1Cost = 200;
+	public static int tower2Cost = 210;
+	public static int tower3Cost = 220;
 	public static int generatorCost = 250;
 
 	private Floor lastFloor;
@@ -48,17 +50,31 @@ public class GameController : MonoBehaviour {
 						minerals -= wallCost;
 				}
 
-				else if(sm.getState() == controlState.tower1 && minerals >= towerCost) {
+				else if(sm.getState() == controlState.tower1 && sm.getTowerType() == towerType.tower1 && minerals >= tower1Cost) {
 					if(f.createTower(towerType.tower1))
-						minerals -= towerCost;
+						minerals -= tower1Cost;
+				}
+
+				else if(sm.getState() == controlState.tower1 && sm.getTowerType() == towerType.tower2 && minerals >= tower2Cost) {
+					if(f.createTower(towerType.tower2))
+						minerals -= tower2Cost;
+				}
+
+				else if(sm.getState() == controlState.tower1 && sm.getTowerType() == towerType.tower3 && minerals >= tower3Cost) {
+					if(f.createTower(towerType.tower3))
+						minerals -= tower3Cost;
 				}
 
 				else if(sm.getState() == controlState.deleteWall) {
 					string tag = f.deleteObject();
 					if (tag == "Wall") {
 						minerals += wallCost;
-					} else if (tag == "Tower") {
-						minerals += towerCost;
+					} else if (tag == "Tower1") {
+						minerals += tower1Cost;
+					} else if (tag == "Tower2") {
+						minerals += tower2Cost;
+					} else if (tag == "Tower3") {
+						minerals += tower3Cost;
 					} else if (tag == "Generator") {
 						minerals += generatorCost;
 					}

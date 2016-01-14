@@ -13,7 +13,9 @@ public class UIController : MonoBehaviour {
 	public Button startButton;
 	public Text mineralCount;
 	public Text wallPrice;
-	public Text towerPrice;
+	public Text tower1Price;
+	public Text tower2Price;
+	public Text tower3Price;
 	public Text generatorPrice;
 	public GameObject confirmationMessageBoxPrefab;
 
@@ -27,7 +29,9 @@ public class UIController : MonoBehaviour {
 		buttons = GameObject.FindGameObjectsWithTag ("Button");
 		toggles = GameObject.FindGameObjectsWithTag ("Toggle");
 		wallPrice.text = GameController.wallCost.ToString();
-		towerPrice.text = GameController.towerCost.ToString();
+		tower1Price.text = GameController.tower1Cost.ToString();
+		tower2Price.text = GameController.tower2Cost.ToString();
+		tower3Price.text = GameController.tower3Cost.ToString();
 		generatorPrice.text = GameController.generatorCost.ToString();
 		minerals = gameController.minerals;
 	}

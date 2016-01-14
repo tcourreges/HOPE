@@ -16,7 +16,9 @@ public class Floor : MonoBehaviour {
 	private GameObject currentObject;
 
 	public GameObject wallPrefab;
-	public GameObject towerPrefab;
+	public GameObject tower1Prefab;
+	public GameObject tower2Prefab;
+	public GameObject tower3Prefab;
 	public GameObject highlightPrefab;
 	public GameObject generatorPrefab;
 	public GameObject laserPrefab;
@@ -64,14 +66,32 @@ public class Floor : MonoBehaviour {
 			return false;
 
 		has=terrain.tower;
-		GameObject towerObject = (GameObject)Instantiate(	towerPrefab,
-									new Vector3(transform.position.x, transform.position.y, transform.position.z),
-									Quaternion.identity
-								);
-		currentObject = towerObject;
-		towerObject.tag = "Tower";
 
-		emitMineralSprite ("-", GameController.towerCost.ToString());
+		if (t == towerType.tower1) {
+			GameObject towerObject = (GameObject)Instantiate(	tower1Prefab,
+			                                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
+			                                                 Quaternion.identity
+			                                                 );
+			currentObject = towerObject;
+			towerObject.tag = "Tower";
+			emitMineralSprite ("-", GameController.tower1Cost.ToString());
+		} else if (t == towerType.tower2) {
+			GameObject towerObject = (GameObject)Instantiate(	tower2Prefab,
+			                                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
+			                                                 Quaternion.identity
+			                                                 );
+			currentObject = towerObject;
+			towerObject.tag = "Tower";
+			emitMineralSprite ("-", GameController.tower2Cost.ToString());
+		} else if (t == towerType.tower3) {
+			GameObject towerObject = (GameObject)Instantiate(	tower3Prefab,
+			                                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
+			                                                 Quaternion.identity
+			                                                 );
+			currentObject = towerObject;
+			towerObject.tag = "Tower";
+			emitMineralSprite ("-", GameController.tower3Cost.ToString());
+		}
 		emitParticles(1);
 
 		return true;
@@ -87,7 +107,16 @@ public class Floor : MonoBehaviour {
 		if (tag == "Wall") {
 			emitMineralSprite("+", GameController.wallCost.ToString());
 		} else if (tag == "Tower") {
-			emitMineralSprite("+", GameController.towerCost.ToString());
+			if (currentObject.GetComponent<Tower>().type == towerType.tower1) {
+				emitMineralSprite("+", GameController.tower1Cost.ToString());
+				tag = "Tower1";
+			} else if (currentObject.GetComponent<Tower>().type == towerType.tower2) {
+				emitMineralSprite("+", GameController.tower2Cost.ToString());
+				tag = "Tower2";
+			} else if (currentObject.GetComponent<Tower>().type == towerType.tower3) {
+				emitMineralSprite("+", GameController.tower3Cost.ToString());
+				tag = "Tower3";
+			}
 		} else if (tag == "Generator") {
 			emitMineralSprite("+", GameController.generatorCost.ToString());
 		}
