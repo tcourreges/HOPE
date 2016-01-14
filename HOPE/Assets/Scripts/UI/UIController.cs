@@ -55,10 +55,17 @@ public class UIController : MonoBehaviour {
 		}
 		if (controlStateMachine.getState () == controlState.simulation1 || controlStateMachine.getState () == controlState.simulation2) {
 			foreach (GameObject b in buttons) {
-				b.GetComponent<Button>().interactable = false;
+				b.GetComponent<Button> ().interactable = false;
 			}
 			foreach (GameObject t in toggles) {
-				t.GetComponent<Toggle>().interactable = false;
+				t.GetComponent<Toggle> ().interactable = false;
+			}
+		} else {
+			foreach (GameObject b in buttons) {
+				b.GetComponent<Button> ().interactable = true;
+			}
+			foreach (GameObject t in toggles) {
+				t.GetComponent<Toggle> ().interactable = true;
 			}
 		}
 		mineralsTarget = gameController.minerals;
@@ -86,10 +93,9 @@ public class UIController : MonoBehaviour {
 	}
 	
 	public void toggleOff() {
-		wallToggle.isOn = false;
-		towerToggle.isOn = false;
-		deleteToggle.isOn = false;
-		generatorToggle.isOn = false;
+		foreach (GameObject t in toggles) {
+			t.GetComponent<Toggle> ().isOn = false;
+		}
 	}
 
 	public void startSimulation() {

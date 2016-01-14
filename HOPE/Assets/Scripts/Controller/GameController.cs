@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
 			killAgents();
 			sm.setState(controlState.idle);
 		}
-		if(sm.getState() == controlState.simulation2) {
+		if(sm.getState() == controlState.simulation2)
 			return;
 
 		Floor f=tg.getFloor();

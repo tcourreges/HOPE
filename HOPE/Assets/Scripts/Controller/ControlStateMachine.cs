@@ -106,7 +106,7 @@ public class ControlStateMachine : MonoBehaviour {
 
 	public void stateSimulation3() {
 		if (currentState == controlState.simulation2) {
-			setState (controlState.idle);
+			setState (controlState.simulation3);
 		}
 	}
 }
