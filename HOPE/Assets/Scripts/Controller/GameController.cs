@@ -13,9 +13,9 @@ public class GameController : MonoBehaviour {
 	public int minerals;
 	public static int wallCost = 50;
 	public static int tower1Cost = 200;
-	public static int tower2Cost = 210;
-	public static int tower3Cost = 220;
-	public static int generatorCost = 250;
+	public static int tower2Cost = 500;
+	public static int tower3Cost = 400;
+	public static int generatorCost = 900;
 
 	private Floor lastFloor;
 
