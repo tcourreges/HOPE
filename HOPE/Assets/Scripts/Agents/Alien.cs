@@ -7,6 +7,7 @@ public class Alien : MonoBehaviour {
 
 	private int healthMax = 100;
 	private int health;
+	private int cdSpeed=0;
 
 	private int sight=8;
 
@@ -63,6 +64,11 @@ public class Alien : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		cdSpeed--;
+		if(cdSpeed<0)
+			agent.speed=2;
+
+
 		if(atDestination()) {
 			if(x==xtarget && y==ytarget) {
 				mapPosition();
@@ -209,6 +215,11 @@ public class Alien : MonoBehaviour {
 		health -= i;
 		if(health < 1)
 			die();
+	}
+	
+	public void slowDown() {
+		agent.speed=0.5f;
+		cdSpeed=150;
 	}
 
 	private void die() {

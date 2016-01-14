@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /* Types of towers
 */
 public enum towerType{
 	core,
 	generator,
-	tower1
+	tower1,
+	tower2,
+	tower3
 };
 
 
@@ -21,24 +24,52 @@ public class Tower : MonoBehaviour {
 	public GameObject towerRangePrefab;
 	private GameObject towerRange;
 	public GameObject towerWallPrefab;
-	private GameObject towerWall;
+	private GameObject towerWall;	
 	public GameObject poweredParticlePrefab;
 	private GameObject poweredParticle;
 
 	private float range=4;
 	private int damage=25;
 	private int reload=60;
+	private int strategy=1;
 
 	private int currentReload;
 
 	public GameObject projectilePrefab;
+
+	public towerType type;
 
 	// Use this for initialization
 	void Start () {
 		transparent=true;
 		powered=false;
 		currentReload = reload;
-		showRange ();
+
+		setTowerType(type);
+	}
+
+	void setTowerType(towerType t) {
+		if(t==towerType.tower1) {
+			range=4;
+			damage=25;
+			reload=60;
+			strategy=1;
+			showRange();
+		}
+		else if(t==towerType.tower2) {
+			range=2;
+			damage=50;
+			reload=100;
+			strategy=2;
+			showRange();
+		}
+		else {
+			range=6;
+			damage=0;
+			reload=40;
+			strategy=1;
+			showRange();
+		}
 	}
 	
 	// Update is called once per frame
@@ -46,7 +77,7 @@ public class Tower : MonoBehaviour {
 		if(updated>10) {
 			powered=false;
 			Destroy (poweredParticle);
-			light(0f);
+			lightOn(0f);
 			gameObject.GetComponent<Renderer>().material.color = Color.white;
 		}
 		updated++;
@@ -54,9 +85,24 @@ public class Tower : MonoBehaviour {
 		currentReload++;
 
 		if(powered && currentReload > reload) {
-			GameObject alien = findClosestEnemy();
-			if(alien != null)
-				attack(alien);
+			if(strategy==1) {
+				GameObject alien = findClosestEnemy();
+				if(alien != null)
+					attack(alien);
+			}
+			else if(strategy==2){
+				List<GameObject> aliens=findEnemiesInRange();
+				foreach(GameObject a in aliens) {
+					if(a != null)
+						attack(a);
+				}
+			}
+			else {
+				GameObject alien = findClosestEnemy();
+				if(alien != null)
+					slow(alien);
+			}
+			
 		}
 
 		//if(powered && towerWall==null) wallRange();
@@ -66,7 +112,7 @@ public class Tower : MonoBehaviour {
 	//Powers the tower during the next 10 frames
 	public void power() {
 		powered=true;
-		light(2.8f);
+		lightOn(2.8f);
 		gameObject.GetComponent<Renderer>().material.color = Color.red;
 		if (poweredParticle == null) {
 			poweredParticle = (GameObject)Instantiate (poweredParticlePrefab,
@@ -79,6 +125,17 @@ public class Tower : MonoBehaviour {
 
 	public void attack(GameObject a) {
 		a.GetComponent<Alien>().healthDown(damage);
+		currentReload = 0;
+
+		GameObject projectile = (GameObject) Instantiate(	projectilePrefab,
+		            						new Vector3(a.transform.position.x, a.transform.position.y, a.transform.position.z),
+		            						Quaternion.identity
+		            				);
+		projectile.GetComponent<LaserProjectile> ().setOriginEnd (transform.position, a.transform.position);		
+	}
+
+	public void slow(GameObject a) {
+		a.GetComponent<Alien>().slowDown();
 		currentReload = 0;
 
 		GameObject projectile = (GameObject) Instantiate(	projectilePrefab,
@@ -105,6 +162,21 @@ public class Tower : MonoBehaviour {
 		return closest;
 	}
 
+	private List<GameObject> findEnemiesInRange() {
+		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
+		List<GameObject> res=new List<GameObject>();
+
+		Vector3 position = transform.position;
+		foreach (GameObject alien in aliens) { 
+		    Vector3 diff = alien.transform.position - position;
+			float dist = diff.x * diff.x + diff.z * diff.z;
+		    if (dist < range * range) {
+		        res.Add(alien);
+		    }
+		}
+		return res;
+	}
+
 	private void showRange() {
 		towerRange = (GameObject)Instantiate(	towerRangePrefab,
 		            				new Vector3(transform.position.x, transform.position.y+0.01f, transform.position.z),
@@ -126,7 +198,7 @@ public class Tower : MonoBehaviour {
 		Destroy (towerRange);
 	}
 
-	public void light(float i) {
+	public void lightOn(float i) {
 		Component[] lights = GetComponentsInChildren<Light>();
 		foreach (Light l in lights) {
 			l.intensity = i;
