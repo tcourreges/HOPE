@@ -219,6 +219,6 @@ public class Tower : MonoBehaviour {
 		Component[] lights = GetComponentsInChildren<Light>();
 		foreach (Light l in lights) {
 			l.intensity = i;
-	        }
+	    }
 	}
 }

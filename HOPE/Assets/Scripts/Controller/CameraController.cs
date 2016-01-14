@@ -17,8 +17,8 @@ public class CameraController : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 	
 	void Start() {
-		//initPos=transform.position;
-		//initRot=transform.rotation;
+		initPos=transform.position;
+		initRot=transform.rotation;
 	}
 	
 	void Update () {
@@ -65,6 +65,11 @@ public class CameraController : MonoBehaviour {
 		}
 		if(Input.GetKey("m")) {
 			transform.Rotate(Vector3.down, Space.World);
+		}
+
+		if (Input.GetKey(KeyCode.Delete)) {
+			transform.position = initPos;
+			transform.rotation = initRot;
 		}
 		
 	}
