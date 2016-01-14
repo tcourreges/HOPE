@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
 			return;
 
 		Floor f=tg.getFloor();
-		if(f!=null) {
+		if(f!=null && f.canEdit) {
 
 			if(sm.getState() != controlState.idle)
 				f.highlight();
@@ -108,14 +108,37 @@ public class GameController : MonoBehaviour {
         
 		foreach (GameObject a in spawns) {
 			a.GetComponent<AlienSpawn>().spawnAlien();
-			Destroy(a);
+			a.GetComponent<MeshRenderer>().enabled = false;
 		}
 
 		GameObject[] spawns2 = GameObject.FindGameObjectsWithTag("RobotSpawn");
         
 		foreach (GameObject r in spawns2) {
 			r.GetComponent<RobotSpawn>().spawnRobot();
-			Destroy(r);
+			r.GetComponent<MeshRenderer>().enabled = false;
 		}
 	}
+
+	private void killAgents() {
+		GameObject[] spawns = GameObject.FindGameObjectsWithTag("AlienSpawn");
+		foreach (GameObject a in spawns) {
+			a.GetComponent<MeshRenderer>().enabled = true;
+		}
+
+		GameObject[] spawns2 = GameObject.FindGameObjectsWithTag("RobotSpawn");
+		foreach (GameObject r in spawns2) {
+			r.GetComponent<MeshRenderer>().enabled = true;
+		}
+
+		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
+		foreach (GameObject a in aliens) {
+			Destroy(a);
+		}
+
+		GameObject[] robots = GameObject.FindGameObjectsWithTag("Robot");
+		foreach (GameObject a in robots) {
+			Destroy(a);
+		}
+	}
+
 }
