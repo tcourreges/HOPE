@@ -114,13 +114,24 @@ public class Tower : MonoBehaviour {
 		powered=true;
 		lightOn(2.8f);
 		gameObject.GetComponent<Renderer>().material.color = Color.red;
-		if (poweredParticle == null) {
-			poweredParticle = (GameObject)Instantiate (poweredParticlePrefab,
-		                                          new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z),
-		                                          Quaternion.identity
-			);
-		}
+		emitParticles();
 		updated=0;
+	}
+
+	public void emitParticles() {
+		if (poweredParticle == null) {
+			if (type == towerType.tower1) {
+				poweredParticle = (GameObject)Instantiate (poweredParticlePrefab,
+				                                           new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z),
+				                                           Quaternion.identity
+				                                           );
+				poweredParticle.GetComponent<PoweredParticle>().setParent (gameObject);
+			} else if (type == towerType.tower2) {
+
+			} else if (type == towerType.tower3) {
+
+			}
+		}
 	}
 
 	public void attack(GameObject a) {
