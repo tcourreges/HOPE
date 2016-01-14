@@ -20,9 +20,13 @@ public class HealthBar : MonoBehaviour {
 			return;
 		}
 
+		float percentage = (float)alien.GetComponent<Alien> ().getHealth () / alien.GetComponent<Alien> ().getHealthMax ();
+
 		transform.position = alien.transform.position;
 		transform.Translate(new Vector3(0,1,-1.5f));
 		transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-		transform.GetChild (0).localScale = new Vector3((float)alien.GetComponent<Alien> ().getHealth () / alien.GetComponent<Alien> ().getHealthMax (), 1, 1);
+		transform.GetChild (0).localScale = new Vector3(percentage, 1, 1);
+
+		transform.GetChild (0).GetChild (0).GetComponent<SpriteRenderer> ().color = Color.Lerp (Color.red, Color.green, percentage);
 	}
 }
