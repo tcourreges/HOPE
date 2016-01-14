@@ -26,7 +26,6 @@ public class Alien : MonoBehaviour {
 
 	public bool transparent=false;
 
-	private bool actionDone;
 	public TerrainGenerator tg;
 
 	private bool foundCore=false;
@@ -64,8 +63,6 @@ public class Alien : MonoBehaviour {
 					map[i,j]=terrain.unknown;
 				else
 					map[i,j]=terrain.outofmap;
-		
-		actionDone = false;
 
 		agent = GetComponent<NavMeshAgent>();
 	}
@@ -89,18 +86,18 @@ public class Alien : MonoBehaviour {
 					mapPosition();
 
 					if(foundCore) {
-						print(id+" found core");
+						//print(id+" found core");
 
 						moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
 					}
 					else {
 						Vector3 toexplore = findClosestUnknown(true);
 						if(toexplore.z==-1){
-							print(id+" through towers");
+							//print(id+" through towers");
 							toexplore = findClosestUnknown(false);
 						}
 						if(toexplore.z!=-1) {
-							print(id+" next location : "+toexplore.x+" "+toexplore.y);
+							//print(id+" next location : "+toexplore.x+" "+toexplore.y);
 							xtarget = (int)toexplore.x;
 							ytarget = (int)toexplore.y;
 							moveTo((int) toexplore.x, (int) toexplore.y);
@@ -122,7 +119,7 @@ public class Alien : MonoBehaviour {
 		else {
 			if(atDestination()) {
 				if(hitByLaser>0 && laserx==-1) {
-					print("foundlaser");
+					//print("foundlaser");
 					laserx=x;
 					lasery=y;
 				}
@@ -133,21 +130,21 @@ public class Alien : MonoBehaviour {
 						return;
 
 					if(foundCore) {
-						print(id+" found core");
+						//print(id+" found core");
 
 						moveTo((int)tg.coreLocation.x, (int)tg.coreLocation.y);
 					}
 					else {
 						Vector3 toexplore = findClosestUnknown(true);
 						if(toexplore.z!=-1) {
-							print(id+" next location : "+toexplore.x+" "+toexplore.y);
+							//print(id+" next location : "+toexplore.x+" "+toexplore.y);
 							xtarget = (int)toexplore.x;
 							ytarget = (int)toexplore.y;
 							moveTo((int) toexplore.x, (int) toexplore.y);
 						}
 						else {
 							if(laserx!=-1) {
-								print("stuck so i go back to laser");
+								//print("stuck so i go back to laser");
 								xtarget=laserx;
 								ytarget=lasery;
 								backToLaser=true;
