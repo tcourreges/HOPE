@@ -63,15 +63,18 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void menuConfirmation() {
+		Time.timeScale = 0;
 		GameObject confirmationMessageBox = (GameObject)Instantiate (confirmationMessageBoxPrefab, new Vector3 (0, 0, 0), Quaternion.identity);
 		confirmationMessageBox.transform.SetParent(gameObject.transform, false);
 	}
 
 	public void menu() {
+		Time.timeScale = 1;
 		Application.LoadLevel (0);
 	}
 
 	public void destroyConfirmationMessageBoxes() {
+		Time.timeScale = 1;
 		GameObject[] confirmationMessageBoxes = GameObject.FindGameObjectsWithTag ("ConfirmationMessageBox");
 		foreach (GameObject cMB in confirmationMessageBoxes) {
 			Destroy(cMB);
