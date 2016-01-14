@@ -28,6 +28,8 @@ public class Tower : MonoBehaviour {
 	public GameObject poweredParticlePrefab;
 	private GameObject poweredParticle;
 
+	public Material towerRangeMaterial;
+
 	private float range=4;
 	private int damage=25;
 	private int reload=60;
@@ -197,6 +199,7 @@ public class Tower : MonoBehaviour {
 		            				Quaternion.identity
 		            				);
 		towerRange.GetComponent<TowerRange> ().initialize (range, gameObject);
+		towerRange.GetComponent<MeshRenderer> ().material = towerRangeMaterial;
 	}
 
 	private void wallRange() {
