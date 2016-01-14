@@ -35,7 +35,11 @@ public class GameController : MonoBehaviour {
 			spawnAgents();
 			sm.setState(controlState.simulation2);
 		}
-		if(sm.getState() == controlState.simulation2)
+		if(sm.getState() == controlState.simulation3) {
+			killAgents();
+			sm.setState(controlState.idle);
+		}
+		if(sm.getState() == controlState.simulation2) {
 			return;
 
 		Floor f=tg.getFloor();

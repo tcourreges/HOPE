@@ -8,7 +8,7 @@ public enum controlState{
 	tower1, //tower selected
 	wall, deleteWall,
 	generator1, generator2, generator3,
-	simulation1, simulation2
+	simulation1, simulation2, simulation3
 };
 
 /*
@@ -102,5 +102,11 @@ public class ControlStateMachine : MonoBehaviour {
 
 	public void stateSimulation1() {
 		setState (controlState.simulation1);
+	}
+
+	public void stateSimulation3() {
+		if (currentState == controlState.simulation2) {
+			setState (controlState.idle);
+		}
 	}
 }
