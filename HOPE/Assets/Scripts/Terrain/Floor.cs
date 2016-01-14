@@ -159,13 +159,20 @@ public class Floor : MonoBehaviour {
 	}
 
 	public bool walkable(bool avoidTowers) {
+
 		if(avoidTowers) {		
-			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5.0f);
+			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 8.0f);
 			int i = 0;
+			Vector3 position = transform.position;
 			while (i < hitColliders.Length) {			
 				if(hitColliders[i].tag == "Tower") {
-					if(hitColliders[i].GetComponent<Tower>().powered)
+					Tower t = hitColliders[i].GetComponent<Tower>();
+					if(t.powered && t.getDamage()>0 ) {
+						Vector3 diff = hitColliders[i].transform.position - position;
+						float dist = diff.x * diff.x + diff.z * diff.z;
+						if (dist+0.8f < t.getRange());
 							return false;
+					}
 				}
 				i++;
 			}

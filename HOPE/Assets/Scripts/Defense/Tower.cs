@@ -177,6 +177,9 @@ public class Tower : MonoBehaviour {
 		return res;
 	}
 
+	public float getRange() {return range;}
+	public float getDamage() {return damage;}
+
 	private void showRange() {
 		towerRange = (GameObject)Instantiate(	towerRangePrefab,
 		            				new Vector3(transform.position.x, transform.position.y+0.01f, transform.position.z),

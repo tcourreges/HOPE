@@ -224,7 +224,8 @@ public class Alien : MonoBehaviour {
 
 	private void die() {
 		Destroy(transform.gameObject);
-		Destroy(healthBar.transform.gameObject);
+		if(healthBar!=null)
+			Destroy(healthBar.transform.gameObject);
 
 		Instantiate(	explosionParticles,
 				new Vector3(transform.position.x, transform.position.y, transform.position.z),
