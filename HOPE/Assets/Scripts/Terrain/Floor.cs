@@ -8,7 +8,7 @@ Walls and Towers can be built on each Floor
 */
 
 public enum terrain{
-	empty, tower, generator, wall, underTower, unknown, outofmap
+	empty, tower, generator, wall, underTower, unknown, outofmap, obstacle
 };
 
 public class Floor : MonoBehaviour {
@@ -27,6 +27,8 @@ public class Floor : MonoBehaviour {
 
 	public terrain has;
 
+	public bool canEdit=true;
+
 	public bool isEmpty() {return currentObject == null;}
 
 	void Start () {
@@ -34,7 +36,7 @@ public class Floor : MonoBehaviour {
 	}
 
 	void Update () {
-
+		
 	}
 
 	//Instantiate a Wall above the Floor
@@ -159,7 +161,6 @@ public class Floor : MonoBehaviour {
 	}
 
 	public bool walkable(bool avoidTowers) {
-
 		if(avoidTowers) {		
 			Collider[] hitColliders = Physics.OverlapSphere(transform.position, 8.0f);
 			int i = 0;
@@ -170,13 +171,16 @@ public class Floor : MonoBehaviour {
 					if(t.powered && t.getDamage()>0 ) {
 						Vector3 diff = hitColliders[i].transform.position - position;
 						float dist = diff.x * diff.x + diff.z * diff.z;
-						if (dist+0.8f < t.getRange());
+						float range = t.getRange()+0.9f;
+						range=range*range;
+						if (dist < range) {
 							return false;
+						}
 					}
 				}
 				i++;
 			}
 		}
-		return isEmpty();
+		return isEmpty() && has!=terrain.obstacle;
 	}
 }

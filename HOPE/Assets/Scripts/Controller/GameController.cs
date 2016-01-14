@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour {
 			return;
 
 		Floor f=tg.getFloor();
-		if(f!=null) {
+		if(f!=null && f.canEdit) {
 
 			if(sm.getState() != controlState.idle)
 				f.highlight();
