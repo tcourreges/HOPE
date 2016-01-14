@@ -112,26 +112,38 @@ public class GameController : MonoBehaviour {
         
 		foreach (GameObject a in spawns) {
 			a.GetComponent<AlienSpawn>().spawnAlien();
-			a.GetComponent<MeshRenderer>().enabled = false;
+			Component[] particleSystems = a.GetComponentsInChildren<ParticleSystem>();
+			foreach (ParticleSystem ps in particleSystems) {
+				ps.enableEmission = false;
+			}
 		}
 
 		GameObject[] spawns2 = GameObject.FindGameObjectsWithTag("RobotSpawn");
         
 		foreach (GameObject r in spawns2) {
 			r.GetComponent<RobotSpawn>().spawnRobot();
-			r.GetComponent<MeshRenderer>().enabled = false;
+			Component[] particleSystems = r.GetComponentsInChildren<ParticleSystem>();
+			foreach (ParticleSystem ps in particleSystems) {
+				ps.enableEmission = false;
+			}
 		}
 	}
 
 	private void killAgents() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag("AlienSpawn");
 		foreach (GameObject a in spawns) {
-			a.GetComponent<MeshRenderer>().enabled = true;
+			Component[] particleSystems = a.GetComponentsInChildren<ParticleSystem>();
+			foreach (ParticleSystem ps in particleSystems) {
+				ps.enableEmission = true;
+			}
 		}
 
 		GameObject[] spawns2 = GameObject.FindGameObjectsWithTag("RobotSpawn");
 		foreach (GameObject r in spawns2) {
-			r.GetComponent<MeshRenderer>().enabled = true;
+			Component[] particleSystems = r.GetComponentsInChildren<ParticleSystem>();
+			foreach (ParticleSystem ps in particleSystems) {
+				ps.enableEmission = true;
+			}
 		}
 
 		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
