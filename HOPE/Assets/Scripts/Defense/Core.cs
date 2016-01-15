@@ -6,6 +6,8 @@ class Core : MonoBehaviour {
 	public int nbAliens0=0, nbRobots0=0;
 	private int nbAliens, nbRobots;
 
+	public ControlStateMachine cSM;
+
 	public int countdown0=0;
 	public int countdownR0=0;
 	private int countdown;
@@ -61,7 +63,7 @@ class Core : MonoBehaviour {
 			if(nbAliens>0)
 				started=true;
 
-			if(nbRobots == 0 && nbAliens == 0)
+			if(nbRobots == 0 && nbAliens == 0 && cSM.getState () != controlState.idle)
 				win();
 
 			if(nbRobots == 0)
