@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour {
 	public Text tower3Price;
 	public Text generatorPrice;
 	public GameObject confirmationMessageBoxPrefab;
+	public Text endText;
 
 	private float minerals;
 	private float mineralsTarget;
@@ -106,6 +107,7 @@ public class UIController : MonoBehaviour {
 		} else {
 			controlStateMachine.stateSimulation3 ();
 			startButton.transform.GetChild(0).GetComponent<Text>().text = "Start";
+			endText.text = "";
 		}
 	}
 
@@ -114,5 +116,13 @@ public class UIController : MonoBehaviour {
 			toggle.isOn = false;
 		else
 			toggle.isOn = true;
+	}
+
+	public void win() {
+		endText.text = "GG!";
+	}
+
+	public void lose() {
+		endText.text = "Try again!";
 	}
 }

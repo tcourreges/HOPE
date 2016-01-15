@@ -37,7 +37,7 @@ public class Alien : MonoBehaviour {
 	public bool stuck=false;
 	public int hitByLaser=0;
 
-	private int laserx=-1, lasery=-1;
+	private float laserx=-1, lasery=-1;
 	private bool backToLaser=false;
 
 	NavMeshAgent agent;// = GetComponent<NavMeshAgent>();
@@ -117,17 +117,18 @@ public class Alien : MonoBehaviour {
 			}
 		}
 		else {
+			if(backToLaser)
+				return;
+			if(hitByLaser>0 && laserx==-1) {
+				print("foundlaser");
+				laserx=agent.destination.x;
+				lasery=agent.destination.y;
+			}
 			if(atDestination()) {
-				if(hitByLaser>0 && laserx==-1) {
-					//print("foundlaser");
-					laserx=x;
-					lasery=y;
-				}
-				else if(x==xtarget && y==ytarget) {
+				if(x==xtarget && y==ytarget) {
 					mapPosition();
 
-					if(backToLaser)
-						return;
+
 
 					if(foundCore) {
 						//print(id+" found core");
@@ -144,9 +145,8 @@ public class Alien : MonoBehaviour {
 						}
 						else {
 							if(laserx!=-1) {
-								//print("stuck so i go back to laser");
-								xtarget=laserx;
-								ytarget=lasery;
+								print("stuck so i go back to laser");
+								agent.destination = new Vector3(laserx, 0, lasery);
 								backToLaser=true;
 							}
 							else {

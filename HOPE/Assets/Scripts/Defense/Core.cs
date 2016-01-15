@@ -13,6 +13,8 @@ class Core : MonoBehaviour {
 	private bool over;
 	private bool started;
 
+	public UIController UI;
+
 	// Use this for initialization
 	void Start () {
 		reset();
@@ -29,13 +31,13 @@ class Core : MonoBehaviour {
 	}
 
 	private void win() {
-
+		UI.win ();
 		over=true;
 		started=false;
 	}
 
 	private void lose() {
-
+		UI.lose ();
 		over=true;
 		started=false;
 	}
