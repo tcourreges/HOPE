@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	handles camera zoom and scrolling
+*/
 public class CameraController : MonoBehaviour {
 
 	public float ScrollSpeed;

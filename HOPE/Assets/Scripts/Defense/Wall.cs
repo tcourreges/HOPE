@@ -2,7 +2,7 @@
 using System.Collections;
 
 /*
-Wall
+Wall: not used
 */
 public class Wall : MonoBehaviour {
 }

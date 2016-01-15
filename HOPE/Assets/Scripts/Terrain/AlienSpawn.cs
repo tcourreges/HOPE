@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+	Spawns an alien	
+*/
 public class AlienSpawn : MonoBehaviour {
 
 	public GameObject alienPrefab;

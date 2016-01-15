@@ -27,9 +27,7 @@ public class ControlStateMachine : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(currentState!=controlState.simulation2 && Input.GetKeyDown("s")) {
-			setState(controlState.simulation1);
-		}
+	
 	}
 
 	public void setState(controlState s) {

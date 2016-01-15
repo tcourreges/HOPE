@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/*
+	functions called by the menu buttons
+*/
+
 public class MenuController : MonoBehaviour {
 
 	public GameObject confirmationMessageBoxPrefab;

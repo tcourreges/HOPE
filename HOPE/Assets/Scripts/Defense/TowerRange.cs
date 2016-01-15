@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	script to instantiate a ring of the right size (range of the tower) and link it to the tower
+*/
+
 public class TowerRange : MonoBehaviour {
 	
 	private GameObject tower;

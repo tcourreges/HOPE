@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	displays the healthBar of an alien
+*/
 public class HealthBar : MonoBehaviour {
 
 	private Alien alien;

@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/*
+	handles the ui buttons and how they interact with the state machine
+*/
 public class UIController : MonoBehaviour {
 
 	public ControlStateMachine controlStateMachine;

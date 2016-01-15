@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+/*
+	Invisible obstacle that fills the corresponding Floor
+*/
 public class Obstacle : MonoBehaviour {
 
 	bool done=false;

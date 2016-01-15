@@ -50,7 +50,7 @@ public class Tower : MonoBehaviour {
 		setTowerType(type);
 	}
 
-	void setTowerType(towerType t) {
+	private void setTowerType(towerType t) {
 		if(t==towerType.tower1) {
 			range=4;
 			damage=25;
@@ -86,6 +86,7 @@ public class Tower : MonoBehaviour {
 
 		currentReload++;
 
+		//STRATEGY
 		if(powered && currentReload > reload) {
 			if(strategy==1) {
 				GameObject alien = findClosestEnemy();

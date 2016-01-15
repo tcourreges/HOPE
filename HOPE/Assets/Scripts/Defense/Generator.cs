@@ -2,7 +2,7 @@
 using System.Collections;
 
 /*
-Tower class : can be powered, attacks aliens
+	Generator class : instantiates a new Laser object
 */
 public class Generator : MonoBehaviour {
 

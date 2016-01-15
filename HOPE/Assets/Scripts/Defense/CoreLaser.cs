@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	Specific case of laser: does not need a generator to be powered
+*/
 public class CoreLaser : MonoBehaviour {
 
 	private LineRenderer line;
@@ -38,6 +41,7 @@ public class CoreLaser : MonoBehaviour {
 		line.SetPosition(1, xf);
 	
 		RaycastHit[] hits = Physics.RaycastAll(x0, xf-x0);
+		//powers the towers/generators along the way, stops when a collider is not transparent
 		for(int i=0; i<hits.Length; i++) {
 			RaycastHit hit=hits[i];
 			GameObject col=hit.collider.gameObject;

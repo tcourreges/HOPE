@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	particle displayed when building/selling defense (price of the action)
+*/
+
 public class MineralSprite : MonoBehaviour {
 
 	public TextMesh text;

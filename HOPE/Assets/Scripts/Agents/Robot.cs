@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	Robot agent
+*/
 public class Robot : MonoBehaviour {
 
 	private NavMeshAgent agent;

@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+	Spawns a robot
+*/
 public class RobotSpawn : MonoBehaviour {
 
 	public GameObject robotPrefab;

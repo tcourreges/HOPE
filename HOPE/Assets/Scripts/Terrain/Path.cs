@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	Obsolete : not used in the project anymore
+*/
 public class Path : MonoBehaviour {
 
 	public int x0, y0, xf, yf;

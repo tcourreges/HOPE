@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	Core defense : detects nearby aliens/robots, handles win/lose conditions
+*/
+
 class Core : MonoBehaviour {
 
 	public int nbAliens0=0, nbRobots0=0;

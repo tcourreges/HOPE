@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	laser projectiles for towers
+*/
+
 public class LaserProjectile : MonoBehaviour {
 
 	private Vector3 x0, xf;

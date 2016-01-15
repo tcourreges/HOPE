@@ -3,6 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+	Alien agent
+*/
+
 public class Alien : MonoBehaviour {
 
 	private int healthMax = 100;
@@ -169,6 +173,7 @@ public class Alien : MonoBehaviour {
 			hitByLaser--;
 	}
 
+	//fills map on the current position
 	private void mapPosition() {
 		for(int i=x-sight; i<x+sight; i++)
 			for(int j=y-sight; j<y+sight; j++)
@@ -181,10 +186,12 @@ public class Alien : MonoBehaviour {
 				}
 	}
 
+	//checks if i,j is a valid index
 	private bool fitsMap(int i, int j) {
 		return (i>=0 && i<tg.sizeOfMap && j>=0 && j<tg.sizeOfMap);
 	}
 
+	//finds the next node on the way to _x,_y, and calls moveTo
 	private void stepTowards(int _x, int _y) {
 		int x1=_x; int y1=_y;
 		int x2=_x; int y2=_y;
@@ -198,6 +205,7 @@ public class Alien : MonoBehaviour {
 		moveTo(x2, y2);
 	}
 
+	//sets the navmesh agent destination to the coordinates of floor[_x,_y]
 	private void moveTo(int _x, int _y) {
 		//print(id+"  moveto "+x+" "+y);
 		Vector3 dest = floors[_x,_y].gameObject.transform.position;
@@ -206,12 +214,14 @@ public class Alien : MonoBehaviour {
 		x=_x; y=_y;
 	}
 
+	//checks if the agent is close enough to floor[x,y]
 	private bool atDestination() {
 		Vector3 diff = transform.position - agent.destination;
 		float dist = diff.x * diff.x + diff.z * diff.z;
 		return (dist < 0.1);
 	}
 
+	//bfs to find the closest unknown in the map (also fills the table from to rebuild the path
 	private Vector3 findClosestUnknown(bool avoidTower) {
             var queue = new Queue<Vector3>();
             queue.Enqueue(new Vector3(x,y,0));
@@ -266,6 +276,7 @@ public class Alien : MonoBehaviour {
 	    return new Vector3(0,0,-1);
 	}
 
+	//shuffle a vector so there is no bias in the direction choice
 	void shuffle(int[] v) {
 		for (int t = 0; t < v.Length; t++ )
 		{
@@ -277,18 +288,18 @@ public class Alien : MonoBehaviour {
 	}
 
 	/* ---------------------------------- */
-
+	//decreases hp by i
 	public void healthDown(int i) {
 		health -= i;
 		if(health < 1)
 			die();
 	}
-	
+	//the agents is slowed
 	public void slowDown() {
 		agent.speed=0.5f;
 		cdSpeed=150;
 	}
-
+	//kills the agent and the healthBar, creates an explosion
 	private void die() {
 		Destroy(transform.gameObject);
 		if(healthBar!=null)

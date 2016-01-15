@@ -107,6 +107,7 @@ public class GameController : MonoBehaviour {
 	
 	}
 
+	//calls the spawn function of each spawn and hides them
 	private void spawnAgents() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag("AlienSpawn");
         
@@ -129,6 +130,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	//kills all the agents and displays the spawns again
 	private void killAgents() {
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag("AlienSpawn");
 		foreach (GameObject a in spawns) {

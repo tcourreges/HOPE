@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+	Rotates the camera in the menu
+*/
 public class MenuCamera : MonoBehaviour {
 
 	void Start () {
