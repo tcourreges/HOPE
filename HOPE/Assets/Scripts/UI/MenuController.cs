@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
 
@@ -7,7 +8,7 @@ public class MenuController : MonoBehaviour {
 	public GameObject levelSelectionPrefab;
 
 	void Start () {
-	
+
 	}
 
 	void Update () {
@@ -30,6 +31,8 @@ public class MenuController : MonoBehaviour {
 	public void loadGame() {
 			GameObject levelSelectionBox = (GameObject)Instantiate (levelSelectionPrefab, new Vector3 (0, 0, 0), Quaternion.identity);
 			levelSelectionBox.transform.SetParent(gameObject.transform, false);
+			Button button = levelSelectionBox.transform.GetChild(4).GetComponentInChildren<Button> ();
+			button.interactable = false;
 	}
 
 	public void closeLevelSelection() {
