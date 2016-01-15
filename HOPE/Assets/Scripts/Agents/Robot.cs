@@ -11,7 +11,6 @@ public class Robot : MonoBehaviour {
 	}
 
 	public void setDestination(float x, float y) {
-		print("toto"+x);
 		agent = GetComponent<NavMeshAgent>();
 		agent.destination = new Vector3 (x, 1.5f, y);
 

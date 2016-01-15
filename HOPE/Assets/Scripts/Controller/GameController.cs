@@ -146,6 +146,11 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		GameObject[] cores = GameObject.FindGameObjectsWithTag("Core");
+		foreach (GameObject c in cores) {
+			c.GetComponent<Core>().reset();
+		}
+
 		GameObject[] aliens = GameObject.FindGameObjectsWithTag("Alien");
 		foreach (GameObject a in aliens) {
 			Destroy(a);
