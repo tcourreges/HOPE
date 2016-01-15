@@ -49,6 +49,8 @@ public class UIController : MonoBehaviour {
 				changeValue (generatorToggle);
 			else if (Input.GetKeyDown("s"))
 				startStopSimulation ();
+			else if (Input.GetKey(KeyCode.Escape))
+				menuConfirmation();
 		}
 
 		if (controlStateMachine.getState () == controlState.generator2) {
